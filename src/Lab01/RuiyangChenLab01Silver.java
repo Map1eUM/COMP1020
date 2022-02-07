@@ -1,18 +1,39 @@
-import java.util.Scanner; //Allows the use of Scanner input
+package Lab01;
 
-public class RuiyangChenLab01Bronze {
+import java.util.Scanner;
+
+public class RuiyangChenLab01Silver {
     /**
      * Lab 1 Bronze exercise
      * COMP 1020
      */
+
+
     public static void main(String[] args) {
         //Call the readData() method to test it,
-        int numberRead = readData();
+        final int N = 1000;
+        int[] num = new int[N];
+        int numberRead = readData(num);
         //and print out the result that was returned.
-        System.out.println(numberRead + " valid entries were read in.");
+        System.out.println(numberRead + " valid entries were read in：");
+        printArray(num, numberRead);
+        System.out.print("Their average is " + average(num, numberRead));
     }//main
 
-    static int readData() {
+    public static void printArray(int[] a, int n) {
+        for (int i = 0; i < n; ++i) {
+            System.out.print(a[i] + (i != n - 1 ? "," : "\n"));
+        }
+    }
+
+    public static double average(int[] a, int n) {
+        double avg = 0;
+        for (int i = 0; i < n; ++i) avg += a[i];
+        avg /= n;
+        return avg;
+    }
+
+    static int readData(int[] num) {
         /* Prompt the user to enter integer values, one at a time.
          * Values between 1 and 100 are valid. They will be accepted,
          * and echoed in a suitable message. A value of 0 will
@@ -31,6 +52,7 @@ public class RuiyangChenLab01Bronze {
             if (readInt > 0 && readInt <= 100) {
                 ++ct;
                 System.out.println("Entry " + readInt + " accepted");
+                num[ct - 1] = readInt;
             } else {
                 if (readInt == 0) return ct;
                 System.out.println("Invalid entry rejected.");
@@ -39,5 +61,4 @@ public class RuiyangChenLab01Bronze {
         } while (true);
 
     }//readData
-
 }
