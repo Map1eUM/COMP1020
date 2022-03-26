@@ -9,15 +9,11 @@
 //    BigCity game = null;
 //    String expectedGrid = null;
 //
-//    try {
 //      System.out.println("This should print BigCity without errors");
-//      game = new BigCity("CityGrid_GoodData4.txt");
+//      game = new BigCity("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment2\\CityGrid_GoodData4.txt");
 //      System.out.println(game);
-//    } catch(IOException ioe) {
-//      System.out.println(ioe.getMessage());
-//    }
 //
-//    System.out.println("This should print true");
+//      System.out.println("This should print true");
 //    System.out.println(game.isRoamingCity());
 //
 //    System.out.println("\nAny valid move should end game. Go right.");

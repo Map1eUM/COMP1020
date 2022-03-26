@@ -18,7 +18,7 @@
 //
 //    try {
 //      System.out.println("This should print BigCity without errors");
-//      game = new BigCity("CityGrid_GoodData6.txt");
+//      game = new BigCity("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment2\\CityGrid_GoodData6.txt");
 //
 //      System.out.println(game);
 //      System.out.println("This 3x3 grid has cheese at (0,1), (0,2), and (1,0)");
@@ -55,7 +55,7 @@
 //
 //    try {
 //      System.out.println("This should print BigCity without errors");
-//      game = new BigCity("CityGrid_GoodData2.txt");
+//      game = new BigCity("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment2\\CityGrid_BadData2.txt");
 //      System.out.println(game);
 //    } catch(IOException ioe) {
 //      System.out.println(ioe.getMessage());

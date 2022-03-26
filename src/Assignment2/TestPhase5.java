@@ -17,7 +17,7 @@
 //
 //    try {
 //      System.out.println("This should print BigCity without errors");
-//      game = new BigCity("CityGrid_GoodData3.txt");
+//      game = new BigCity("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment2\\CityGrid_GoodData3.txt");
 //      System.out.println(game);
 //    } catch(IOException ioe) {
 //      System.out.println(ioe.getMessage());
@@ -61,7 +61,7 @@
 //
 //    try {
 //      System.out.println("This should print BigCity without errors");
-//      game = new BigCity("CityGrid_GoodData3.txt");
+//      game = new BigCity("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment2\\CityGrid_GoodData3.txt");
 //      System.out.println(game);
 //    } catch(IOException ioe) {
 //      System.out.println(ioe.getMessage());

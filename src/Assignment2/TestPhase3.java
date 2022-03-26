@@ -14,7 +14,7 @@
 //    try {
 //      System.out.println("This should print BigCity without errors");
 //
-//      BigCity game = new BigCity("CityGrid_GoodData1.txt");
+//      BigCity game = new BigCity("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment2\\CityGrid_GoodData1.txt");
 //      System.out.println(game);
 //
 //      System.out.println("move('d') - Move right one step");
@@ -52,8 +52,6 @@
 //      System.out.println("This should print:\n" + expectedGrid);
 //      System.out.println(game);
 //
-//    } catch(IOException ioe) {
-//      System.out.println(ioe.getMessage());
 //    } catch (IndexOutOfBoundsException iobe) {
 //      System.out.println(iobe.getMessage());
 //    }
@@ -66,16 +64,12 @@
 //    BigCity game = null;
 //    String expectedGrid = null;
 //
-//    try {
-//      game = new BigCity("CityGrid_GoodData1.txt");
+//      game = new BigCity("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment2\\CityGrid_GoodData1.txt");
 //
 //      System.out.println("This should print BigCity without errors");
 //      System.out.println(game);
-//    } catch(IOException ioe) {
-//      System.out.println(ioe.getMessage());
-//    }
 //
-//    try {
+//      try {
 //      System.out.println("move('w') - Move up to trigger an IndexOutOfBoundsException");
 //      System.out.println("This should print: This move takes Suzie out of the grid.");
 //      game.move('w');

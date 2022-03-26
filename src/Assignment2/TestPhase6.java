@@ -3,7 +3,7 @@
 //import java.io.IOException;
 //
 //public class TestPhase6 {
-//  public static void main(String [] parms) {
+//  public static void main(String [] parms) throws IOException {
 //
 //    System.out.println("Testing updated toString() method...\n\n");
 //
@@ -11,16 +11,16 @@
 //    BigCity game2 = null;
 //    String expectedGrid = null;
 //
-//    try {
+////    try {
 //      System.out.println("This should print BigCity without errors");
 //
-//      game1 = new BigCity("CityGrid_GoodData5.txt");
-//      game2 = new BigCity("CityGrid_GoodData5.txt");
+//      game1 = new BigCity("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment2\\CityGrid_GoodData5.txt");
+//      game2 = new BigCity("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment2\\CityGrid_GoodData5.txt");
 //
 //      System.out.println(game1);
-//    } catch(IOException ioe) {
-//      System.out.println(ioe.getMessage());
-//    }
+////    } catch(IOException ioe) {
+////      System.out.println(ioe.getMessage());
+////    }
 //
 //    System.out.println("End the game by collecting all the cheese");
 //    game1.move('s');
