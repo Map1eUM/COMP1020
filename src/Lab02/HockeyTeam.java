@@ -5,8 +5,8 @@ public class HockeyTeam {
     private String name;
     private int win, loss, otLoss;
     public static int ct = 0;
-    public static int N = 100;
-    private static HockeyTeam[] lst = new HockeyTeam[N];
+    public static int columns = 100;
+    private static HockeyTeam[] lst = new HockeyTeam[columns];
 
     public HockeyTeam(String name, int win, int loss, int otLoss) {
         this.name = name;

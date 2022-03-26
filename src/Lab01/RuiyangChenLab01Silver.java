@@ -11,8 +11,8 @@ public class RuiyangChenLab01Silver {
 
     public static void main(String[] args) {
         //Call the readData() method to test it,
-        final int N = 1000;
-        int[] num = new int[N];
+        final int columns = 1000;
+        int[] num = new int[columns];
         int numberRead = readData(num);
         //and print out the result that was returned.
         System.out.println(numberRead + " valid entries were read in：");

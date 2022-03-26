@@ -607,10 +607,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * @param y an array of all the y-coordindates of the polygon
      */
     public static void polygon(double[] x, double[] y) {
-        int N = x.length;
+        int columns = x.length;
         GeneralPath path = new GeneralPath();
         path.moveTo((float) scaleX(x[0]), (float) scaleY(y[0]));
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < columns; i++)
             path.lineTo((float) scaleX(x[i]), (float) scaleY(y[i]));
         path.closePath();
         offscreen.draw(path);
@@ -623,10 +623,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * @param y an array of all the y-coordindates of the polygon
      */
     public static void filledPolygon(double[] x, double[] y) {
-        int N = x.length;
+        int columns = x.length;
         GeneralPath path = new GeneralPath();
         path.moveTo((float) scaleX(x[0]), (float) scaleY(y[0]));
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < columns; i++)
             path.lineTo((float) scaleX(x[i]), (float) scaleY(y[i]));
         path.closePath();
         offscreen.fill(path);
