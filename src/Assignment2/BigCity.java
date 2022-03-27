@@ -18,52 +18,11 @@ public class BigCity {
     private int getCheeseNum, moveMade;
     private boolean isFree;
 
-    private char[][][] rev = new char[5][][]; //no need to initialise in constructor since we know size is constant.
+    private char[][][] rev = new char[6][][]; //no need to initialise in constructor since we know size is constant.
     private int step = 0;
     //for processMove usage...
     private int newX, newY;
 
-    //-----------------phase 7----------------------------------------
-    private void saveGrid() {
-        if (step == 0) {
-            step++;
-            this.rev[0] = this.grid;
-            return;
-        }
-        //this is actually a stack...
-        for (int i = step - 1; i >= 0; --i) {
-            if (i + 1 >= 5) continue;
-            this.rev[i + 1] = this.rev[i];
-        }
-        this.rev[0] = this.grid;
-        step++;
-    }
-
-    public void undo() {
-        if (this.step == 0) return;
-        this.grid = this.rev[0];
-        if (step == 1) step = 0;
-        else {
-            for (int i = 0; i < step - 1; ++i)
-                this.rev[i] = this.rev[i + 1];
-            step--;
-        }
-    }
-
-    public BigCity(int rows, int cols, int numBoxes, int numCheese, int[][] cheesePositions) {
-        this.rows = rows;
-        this.columns = cols;
-        this.boxNum = numBoxes;
-        this.cheeseNum = numCheese;
-        this.cheesePositions = cheesePositions;
-        this.grid = new char[this.rows][this.columns];
-        this.mark = new boolean[this.rows][this.columns];
-        this.getCheeseNum = 0;
-        this.moveMade = 0;
-        this.isFree = true;
-        this.xPos = this.yPos = 0;
-        fillGrid();
-    }
 
     //--------------------------phrase 3-----------------------------------------
     private void processMove(char dir) {
@@ -110,7 +69,82 @@ public class BigCity {
         processMove(dir);
 
     }
-//--------------------------phrase 3-----------------------------------------
+    //--------------------------phrase 3-----------------------------------------
+
+    //-----------------phase 7----------------------------------------
+    public char[][] deepCopy(char[][] input) {
+        char[][] ans = new char[this.rows][this.columns];
+        for (int i = 0; i < this.rows; ++i) {
+            for (int j = 0; j < this.columns; ++j) {
+                ans[i][j] = input[i][j];
+
+            }
+        }
+        return ans;
+    }
+
+    private void saveGrid() {
+        if (step == 0) {
+            step++;
+            //this is not deep copy!
+//            this.rev[0] = this.grid;
+            this.rev[0] = deepCopy(this.grid);
+            return;
+        }
+
+        for (int i = step - 1; i >= 0; --i) {
+            if (i + 1 == 5) continue;
+            this.rev[i + 1] = deepCopy(this.rev[i]);
+        }
+        //THis is not deep copy!
+//        this.rev[0] = this.grid;
+        this.rev[0] = deepCopy(this.grid);
+//        System.out.print("WARNING");
+//        printer();
+        //don't let step be bigger than 5!
+        if (step < 5) step++;
+    }
+
+    public void undo() {
+//        System.out.print("WARNING2");
+//        printer();
+        if (this.step == 0) return;
+        this.grid = deepCopy(this.rev[0]);
+        if (this.step == 1) this.step = 0;
+        else {
+            for (int i = 0; i < step - 1; ++i)
+                this.rev[i] = deepCopy(this.rev[i + 1]);
+            this.step--;
+        }
+        for (int i = 0; i < this.rows; ++i) {
+            for (int j = 0; j < this.columns; ++j) {
+                if (this.grid[i][j] == 's') {
+                    this.xPos = i;
+                    this.yPos = j;
+                    return;
+                }
+            }
+        }
+
+    }
+
+
+
+    public BigCity(int rows, int cols, int numBoxes, int numCheese, int[][] cheesePositions) {
+        this.rows = rows;
+        this.columns = cols;
+        this.boxNum = numBoxes;
+        this.cheeseNum = numCheese;
+        this.cheesePositions = cheesePositions;
+        this.grid = new char[this.rows][this.columns];
+        this.mark = new boolean[this.rows][this.columns];
+        this.getCheeseNum = 0;
+        this.moveMade = 0;
+        this.isFree = true;
+        this.xPos = this.yPos = 0;
+        fillGrid();
+    }
+
 
     //-------------------------------------------phrase 4--------------------------------
     private void endTerror() {
@@ -140,7 +174,7 @@ public class BigCity {
     //---------------------phase 5--------------------------------------
     char[] extractRow(int rowNum) throws DataDoesNotExistException {
         if (rowNum >= this.rows || rowNum < 0)
-            throw new DataDoesNotExistException("BigCity grid does not have a row index of" + rowNum);
+            throw new DataDoesNotExistException("BigCity grid does not have a row index of " + rowNum);
 //        } catch (DataDoesNotExistException e) {
 //            e.printStackTrace();
 //        }
