@@ -1,12 +1,10 @@
 package Assignment2;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.InputMismatchException;
+import java.io.*;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import static processing.core.PApplet.print;
 
 public class BigCity {
     private int rows, columns;
@@ -74,7 +72,7 @@ public class BigCity {
         if (this.grid[newX][newY] == '.') this.moveMade++;
         else if (this.grid[newX][newY] == 'b') {
             this.moveMade++;
-            if (isBoxCheese(newX,newY))
+            if (isBoxCheese(newX, newY))
                 this.getCheeseNum++;
             else endTerror();
         }
@@ -167,18 +165,13 @@ public class BigCity {
         //-------------Test Phase 3 print--------------------------
         for (int i = 0; i < this.rows; ++i) {
             for (int j = 0; j < this.columns; ++j)
-                System.out.print(this.grid[i][j]+" ");
+                System.out.print(this.grid[i][j] + " ");
             System.out.println();
         }
         //-----------------------------------------------------------
 
-
-        //--------------------------------Phase 1 and 7 part of toString require---------------------------------
-        String S = String.format("s at (%d,%d),\nb at ", this.xPos, this.yPos);
-
-        for (int i = 0; i < this.cheeseNum; ++i)
-            S += String.format("(%d,%d)", this.cheesePositions[i][0], this.cheesePositions[i][1]) + (i == this.cheeseNum - 1 ? "\n" : ", ");
-        S += "and " + (this.boxNum - this.cheeseNum) + " random b's\n";
+        String S = "";
+        //--------------------------------Phase 1 and 7 test part of toString require---------------------------------
         if (!isFree && (this.cheeseNum - this.getCheeseNum) > 0)
             S += "Suzie's reign of terror came to an end abruptly after just " + this.moveMade + " move. She was captured with " + this.getCheeseNum + " cheese crumbs on her person";
         else if (!isFree && this.cheeseNum == this.getCheeseNum)
@@ -210,61 +203,71 @@ public class BigCity {
     }
 
     //------------------------------CONSTUCTOR BY FILE-----------------------------------------------------
-    public BigCity (String filename) throws IOException {
+    private static String removeLastChar(String s) {
+        return (s == null || s.length() == 0)
+                ? null
+                : (s.substring(0, s.length() - 1));
+    }
+
+    public BigCity(String filename) throws IOException {
         this.xPos = this.yPos = 0;
         this.getCheeseNum = 0;
         this.moveMade = 0;
         this.isFree = true;
-        int ct=0;
+        int ct = 0;
         try {
             Scanner mapFile = new Scanner(new BufferedReader(new FileReader(filename)));
-//            String test1 = mapFile.nextLine();
-//            if (test1.charAt(0) == 's') throw new IOException("No dimension to read");
-            //-------------------------------------------------------------------------------
-            int[] readInt = new int[2];
-            readInt[0] = mapFile.nextInt();
-            readInt[1] = mapFile.nextInt();
-            this.rows = readInt[0];
-            this.columns = readInt[1];
-//            System.out.println(readInt[0]);
-//            System.out.println(readInt[1]);
-            System.out.print(mapFile.nextLine()); //get away with \n
-            char[][] charMap = new char[readInt[0]][readInt[1]];
+            //--------------------------------- get city grid size---------------------------------------
+
+            this.rows = Integer.parseInt(String.valueOf(mapFile.next()));
+            this.columns = Integer.parseInt(String.valueOf(mapFile.next()));
+            if (this.rows == 0 && this.columns == 0) throw new IOException("No grid to read");
+            mapFile.nextLine();
+            //-------------------------------------------------------------------------------------------
+
+            char[][] charMap = new char[this.rows][this.columns];
             for (int i = 0; i < this.rows; ++i) {
-                String newLine = mapFile.nextLine();
-                ct++;
-//                System.out.println(newLine.length());
-                if (newLine.length() / 2 + 1 != this.columns)
-                    throw new IOException("Inaccurate number of columns of cheese in the file. Saw " + (newLine.length() / 2 + 1) + " expected " + this.columns);
-                for (int j = 0; j < newLine.length(); j += 2)
-                    charMap[i][j / 2] = newLine.charAt(j);
+                String curLine = mapFile.nextLine();
+                //At first we judge if there's even grid to read
+                if (i == 0 && curLine.charAt(0) != 's') throw new IOException("No grid to read");
+                Scanner cur = new Scanner(curLine);
+                int realColumn = 0;
+                try {
+                    for (int j = 0; j < this.columns; ++j) {
+                        charMap[i][j] = cur.next().charAt(0);
+                        realColumn = j + 1;
+                    }
+                } catch (NoSuchElementException e) {
+                    throw new IOException("Inaccurate number of columns of cheese in the file. Saw " + realColumn + " expected " + this.columns);
+                }
             }
 
 
             this.grid = charMap;
             this.boxNum = mapFile.nextInt();
             this.cheeseNum = mapFile.nextInt();
+            if (this.boxNum == 0) throw new IOException("No boxes on grid");
             this.cheesePositions = new int[this.cheeseNum][2];
+            //---------------------------------Read cheese positions------------------------
+            int eNum = 0;
             try {
                 for (int i = 0; i < this.cheeseNum; ++i) {
                     //remember to add exception if there are less than cheeseNum lines.
-                    this.cheesePositions[i][0] = mapFile.nextInt();
-                    this.cheesePositions[i][1] = mapFile.nextInt();
+
+                    this.cheesePositions[i][0] = Integer.parseInt(String.valueOf(mapFile.next()));
+                    this.cheesePositions[i][1] = Integer.parseInt(String.valueOf(mapFile.next()));
+                    eNum = i;
                     //the right data already marked all cheese cheesePositions in map!
-//                this.grid[this.cheesePositions[i][0]][this.cheesePositions[i][1]] = 'b';
+//                this.grid[this.cheesePositions[i][0]][this.cheesePositions[i][1]] = 'b'
                 }
             } catch (NoSuchElementException e) {
-                System.out.println("No grid to read");
+                throw new IOException("Inaccurate number of rows of cheese positions in the file. Saw " + eNum + " expected " + this.cheeseNum);
+                //-----------------------------------------------------------------------------
             }
         } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-            System.out.println("The file " + filename + " was not found");
-        } catch (InputMismatchException e) {
-//            throw new IOException(" java.io.IOException: No dimension to read");
-            if(this.rows!= ct) {
-                System.out.println("Inaccurate number of rows of cheese positions in the file. Saw 0 expected 1");
-            }
-            System.out.println("No dimension to read");
+            throw new IOException("The file " + filename + " was not found");
+        } catch (NumberFormatException e) {
+            throw new IOException("No dimension to read");
         }
     }
 //------------------------------------------------------------------------------------------------------
