@@ -106,8 +106,7 @@ public class BigCity {
     }
 
     public void undo() {
-//        System.out.print("WARNING2");
-//        printer();
+
         if (this.step == 0) return;
         this.grid = deepCopy(this.rev[0]);
         if (this.step == 1) this.step = 0;
@@ -116,6 +115,7 @@ public class BigCity {
                 this.rev[i] = deepCopy(this.rev[i + 1]);
             this.step--;
         }
+        //get the former position
         for (int i = 0; i < this.rows; ++i) {
             for (int j = 0; j < this.columns; ++j) {
                 if (this.grid[i][j] == 's') {
