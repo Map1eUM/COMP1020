@@ -3,6 +3,10 @@ package Assignment2;
 import java.io.*;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import static processing.core.PApplet.print;
+import static processing.core.PApplet.println;
+
 public class BigCity {
     private int rows, columns;
     private int boxNum, cheeseNum, xPos, yPos;
@@ -14,6 +18,7 @@ public class BigCity {
     private int step = 0;
     //for processMove usage...
     private int newX, newY;
+
     private void processMove(char dir) {
         saveGrid();
         if (this.grid[newX][newY] == '.') this.moveMade++;
@@ -28,6 +33,7 @@ public class BigCity {
         this.xPos = newX;
         this.yPos = newY;
     }
+
     public void move(char dir) {
         //if game ended, return
         if (!this.isFree) return;
@@ -50,6 +56,7 @@ public class BigCity {
         //before move, save status!
         processMove(dir);
     }
+
     public char[][] deepCopy(char[][] input) {
         char[][] ans = new char[this.rows][this.columns];
         for (int i = 0; i < this.rows; ++i) {
@@ -59,6 +66,7 @@ public class BigCity {
         }
         return ans;
     }
+
     private void saveGrid() {
         if (step == 0) {
             step++;
@@ -72,9 +80,11 @@ public class BigCity {
         this.rev[0] = deepCopy(this.grid);
         if (step < 5) step++;
     }
+
     public void undo() {
         if (this.step == 0) return;
         this.grid = deepCopy(this.rev[0]);
+        cheeseUpdate();
         if (this.step == 1) this.step = 0;
         else {
             for (int i = 0; i < step - 1; ++i)
@@ -92,6 +102,7 @@ public class BigCity {
             }
         }
     }
+
     public BigCity(int rows, int cols, int numBoxes, int numCheese, int[][] cheesePositions) {
         this.rows = rows;
         this.columns = cols;
@@ -105,13 +116,29 @@ public class BigCity {
         this.xPos = this.yPos = 0;
         fillGrid();
     }
+
     private void endTerror() {
         //game ended
         this.isFree = false;
     }
+
     public boolean isRoamingCity() {
         return this.isFree;
     }
+
+    private void cheeseUpdate() {
+
+        int ans = this.cheeseNum;
+        for (int i = 0; i < this.cheeseNum; ++i) {
+            if (this.grid[this.cheesePositions[i][0]][this.cheesePositions[i][1]] == 'b') {
+                --ans;
+                println(this.cheesePositions[i][0]);
+                println(this.cheesePositions[i][1]);
+            }
+        }
+        this.getCheeseNum = ans;
+    }
+
     private boolean isBoxCheese(int row, int col) {
         for (int i = 0; i < this.cheeseNum; ++i) {
             if (row == this.cheesePositions[i][0] && col == this.cheesePositions[i][1])
@@ -119,17 +146,22 @@ public class BigCity {
         }
         return false;
     }
+
     private boolean isValid(int x, int y) {
-        for (int i = 0; i < this.cheeseNum; ++i) {
-            if (x == this.cheesePositions[i][0] && y == this.cheesePositions[i][1]) return false;
-        }
+//        for (int i = 0; i < this.cheeseNum; ++i) {
+//            if (x == this.cheesePositions[i][0] && y == this.cheesePositions[i][1]) return false;
+//        }
+        if (x == 0 && y == 0) return false;
+        if (this.grid[x][y] == 'b') return false;
         return true;
     }
+
     char[] extractRow(int rowNum) throws DataDoesNotExistException {
         if (rowNum >= this.rows || rowNum < 0)
             throw new DataDoesNotExistException("BigCity grid does not have a row index of " + rowNum);
         return this.grid[rowNum];
     }
+
     char[] extractColumn(int colNum) throws DataDoesNotExistException {
         if (colNum >= this.columns || colNum < 0)
             throw new DataDoesNotExistException("BigCity grid does not have a column index of " + colNum);
@@ -138,6 +170,7 @@ public class BigCity {
             ans[i] = this.grid[i][colNum];
         return ans;
     }
+
     public String toString() {
         for (int i = 0; i < this.rows; ++i) {
             for (int j = 0; j < this.columns; ++j)
@@ -154,6 +187,7 @@ public class BigCity {
 
         //----------------------------------------------------------------------------------------------
     }
+
     private void fillGrid() {
         for (int i = 0; i < this.rows; ++i) {
             for (int j = 0; j < this.columns; ++j) {
@@ -165,14 +199,16 @@ public class BigCity {
         for (int i = 0; i < this.cheeseNum; ++i)
             this.grid[this.cheesePositions[i][0]][this.cheesePositions[i][1]] = 'b';
         while (boxFillNum > 0) {
-            int x = (int) (Math.random() % this.rows);
-            int y = (int) (Math.random() % this.columns);
+            int x = (int) (Math.random() * this.rows);
+            int y = (int) (Math.random() * this.columns);
+//            print(this.rows + " " + this.columns);
             if (isValid(x, y)) {
                 this.grid[x][y] = 'b';
                 boxFillNum--;
             }
         }
     }
+
     //------------------------------CONSTUCTOR BY FILE-----------------------------------------------------
     public BigCity(String filename) throws IOException {
         this.xPos = this.yPos = 0;

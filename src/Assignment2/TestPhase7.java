@@ -37,6 +37,7 @@ public class TestPhase7 {
     game.move('d');
     game.move('d');
     game.undo();
+//    game.undo();
     game.move('s');
     
     expectedGrid = ". . b\n" + "b s .\n" + "b . .\n" +
