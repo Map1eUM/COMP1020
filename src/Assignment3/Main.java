@@ -11,6 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         Airline newFlight = new Airline();
+        FILE_NAME = "C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment3\\TestPhase1.txt";
         readInputFile(FILE_NAME, newFlight);
     }
 
@@ -18,7 +19,8 @@ public class Main {
         try {
             Scanner fileReader = new Scanner(new File(fileName));
             String S = "";
-            while ((S = fileReader.nextLine()) != null) {
+            while (fileReader.hasNextLine()) {
+                S = fileReader.nextLine();
                 if (S.charAt(0) == '*') {
                     processComment(S);
                 } else {
@@ -40,7 +42,7 @@ public class Main {
 
     public static void parseCommand(String[] tokens, Airline air) throws InvalidInputException {
         //for phase 1
-        throw new InvalidInputException("Command not found");
+        throw new InvalidInputException("InvalidInputException: Command not found");
 //        switch (tokens[0]) {
 //
 //        }
