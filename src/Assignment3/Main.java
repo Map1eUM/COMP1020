@@ -28,7 +28,7 @@ public class Main {
                     try {
 
                     } catch (Exception e) {
-
+                        System.out.println(e.getMessage());
                     }
                 }
             }
@@ -39,7 +39,11 @@ public class Main {
     }
 
     public static void parseCommand(String[] tokens, Airline air) throws InvalidInputException {
-
+        //for phase 1
+        throw new InvalidInputException("Command not found");
+//        switch (tokens[0]) {
+//
+//        }
     }
 
     public static void processComment(String data) {

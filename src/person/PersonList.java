@@ -1,40 +1,39 @@
-package person;
+package Person;
 
 /**
- * A class for a list-of-Person type
+ * Write a description of class PersonList here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
  */
 public class PersonList {
-  
-  //Two instance variables forming a partly-full array.
-  private int listSize;
-  private Person[] people;
-  
-  //A class constant for the maximum size of all PersonLists
-  private static final int MAX_SIZE = 100;
-    
-  //A constructor that forms an empty list
-  public PersonList() {
-    listSize = 0;
-    people = new Person[MAX_SIZE];
-  }//constructor
-  
-  //Add a new person to the list
-  public void addPerson(Person newPerson){
-    people[listSize++] = newPerson;
-    
-  }//addPerson
-  //people[person1,person1 , , ]
-  
-  //Convert the list to a string, of the form
-  //   [person1,person2,...]
-  public String toString(){
-    String result = "[";
-    for(int i=0; i<listSize; i++) {
-      result += people[i];
-      if(i != listSize-1)
-        result += ","; //Don't add comma after last one
-    }//[name,name,...]
-    return result+"]";
-  }//toString
-  
-}//PersonList
+    private Person[] people;
+    private int count;
+
+    public PersonList() {
+        // initialise instance variables
+        count = 0;
+        people = new Person[10];
+
+    }
+
+    public void addPerson(Person newOne) {
+        people[count] = newOne;
+        count++;
+    }
+
+    public String toString() {
+        //Jane(18)[i=0],Fred(21)[i=1],Sara(23)[i=2]
+        String listPerson = "";
+        for (int i = 0; i < count; i++) {
+            listPerson += people[i]; //Jane(18)
+            //listPerson +=","; //Jane(18),Fred(21),Sara(23),
+            if (i < count - 1)
+                listPerson += ",";
+            //listPerson+","+people[i]; //,Jane(18)
+        }
+        return listPerson;
+    }
+
+
+}
