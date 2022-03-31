@@ -4,54 +4,52 @@ import java.io.*;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static processing.core.PApplet.print;
-import static processing.core.PApplet.println;
 
 public class BigCity {
     private int rows, columns;
-    private int boxNum, cheeseNum, xPos, yPos;
+    private int boxNum, cheeseNum, xSuziePos, ySuziePos;
     private int[][] cheesePositions;
     private char[][] grid;
     private int getCheeseNum, moveMade;
-    private boolean isFree;
+    private boolean isWonderingFree;
     private char[][][] rev = new char[5][][]; //no need to initialise in constructor since we know size is constant.
     private int step = 0;
     //for processMove usage...
-    private int newX, newY;
+    private int newSuzieX, newSuzieY;
 
     private void processMove(char dir) {
         saveGrid();
-        if (this.grid[newX][newY] == '.') this.moveMade++;
-        else if (this.grid[newX][newY] == 'b') {
+        if (this.grid[newSuzieX][newSuzieY] == '.') this.moveMade++;
+        else if (this.grid[newSuzieX][newSuzieY] == 'b') {
             this.moveMade++;
-            if (isBoxCheese(newX, newY))
+            if (isBoxCheese(newSuzieX, newSuzieY))
                 this.getCheeseNum++;
             else endTerror();
         }
-        this.grid[this.xPos][this.yPos] = '.';
-        this.grid[newX][newY] = 's';
-        this.xPos = newX;
-        this.yPos = newY;
+        this.grid[this.xSuziePos][this.ySuziePos] = '.';
+        this.grid[newSuzieX][newSuzieY] = 's';
+        this.xSuziePos = newSuzieX;
+        this.ySuziePos = newSuzieY;
     }
 
     public void move(char dir) {
         //if game ended, return
-        if (!this.isFree) return;
+        if (!this.isWonderingFree) return;
         //reminder that X is first dimension
         if (dir == 'w') {
-            newX = this.xPos - 1;
-            newY = this.yPos;
+            newSuzieX = this.xSuziePos - 1;
+            newSuzieY = this.ySuziePos;
         } else if (dir == 's') {
-            newX = this.xPos + 1;
-            newY = this.yPos;
+            newSuzieX = this.xSuziePos + 1;
+            newSuzieY = this.ySuziePos;
         } else if (dir == 'a') {
-            newX = this.xPos;
-            newY = this.yPos - 1;
+            newSuzieX = this.xSuziePos;
+            newSuzieY = this.ySuziePos - 1;
         } else if (dir == 'd') {
-            newX = this.xPos;
-            newY = this.yPos + 1;
+            newSuzieX = this.xSuziePos;
+            newSuzieY = this.ySuziePos + 1;
         } else return;
-        if (newX < 0 || newX >= this.rows || newY < 0 || newY >= this.columns)
+        if (newSuzieX < 0 || newSuzieX >= this.rows || newSuzieY < 0 || newSuzieY >= this.columns)
             throw new IndexOutOfBoundsException("This move takes Suzie out of the grid.");
         //before move, save status!
         processMove(dir);
@@ -95,8 +93,8 @@ public class BigCity {
         for (int i = 0; i < this.rows; ++i) {
             for (int j = 0; j < this.columns; ++j) {
                 if (this.grid[i][j] == 's') {
-                    this.xPos = i;
-                    this.yPos = j;
+                    this.xSuziePos = i;
+                    this.ySuziePos = j;
                     return;
                 }
             }
@@ -112,28 +110,25 @@ public class BigCity {
         this.grid = new char[this.rows][this.columns];
         this.getCheeseNum = 0;
         this.moveMade = 0;
-        this.isFree = true;
-        this.xPos = this.yPos = 0;
+        this.isWonderingFree = true;
+        this.xSuziePos = this.ySuziePos = 0;
         fillGrid();
     }
 
     private void endTerror() {
         //game ended
-        this.isFree = false;
+        this.isWonderingFree = false;
     }
 
     public boolean isRoamingCity() {
-        return this.isFree;
+        return this.isWonderingFree;
     }
 
     private void cheeseUpdate() {
-
         int ans = this.cheeseNum;
         for (int i = 0; i < this.cheeseNum; ++i) {
             if (this.grid[this.cheesePositions[i][0]][this.cheesePositions[i][1]] == 'b') {
                 --ans;
-                println(this.cheesePositions[i][0]);
-                println(this.cheesePositions[i][1]);
             }
         }
         this.getCheeseNum = ans;
@@ -148,9 +143,6 @@ public class BigCity {
     }
 
     private boolean isValid(int x, int y) {
-//        for (int i = 0; i < this.cheeseNum; ++i) {
-//            if (x == this.cheesePositions[i][0] && y == this.cheesePositions[i][1]) return false;
-//        }
         if (x == 0 && y == 0) return false;
         if (this.grid[x][y] == 'b') return false;
         return true;
@@ -179,9 +171,9 @@ public class BigCity {
         }
         String S = "";
         //--------------------------------Phase 7 test part of toString require---------------------------------
-        if (!isFree && (this.cheeseNum - this.getCheeseNum) > 0)
+        if (!isWonderingFree && (this.cheeseNum - this.getCheeseNum) > 0)
             S += "Suzie's reign of terror came to an end abruptly after just " + this.moveMade + " move. She was captured with " + this.getCheeseNum + " cheese crumbs on her person";
-        else if (!isFree && this.cheeseNum == this.getCheeseNum)
+        else if (!isWonderingFree && this.cheeseNum == this.getCheeseNum)
             S += "Suzie outsmarted the exterminators, making " + this.moveMade + " moves and collecting all " + this.getCheeseNum + " cheese crumbs. She sniffed out the " + (this.boxNum - this.cheeseNum) + " traps.";
         return S;
 
@@ -201,7 +193,6 @@ public class BigCity {
         while (boxFillNum > 0) {
             int x = (int) (Math.random() * this.rows);
             int y = (int) (Math.random() * this.columns);
-//            print(this.rows + " " + this.columns);
             if (isValid(x, y)) {
                 this.grid[x][y] = 'b';
                 boxFillNum--;
@@ -211,10 +202,10 @@ public class BigCity {
 
     //------------------------------CONSTUCTOR BY FILE-----------------------------------------------------
     public BigCity(String filename) throws IOException {
-        this.xPos = this.yPos = 0;
+        this.xSuziePos = this.ySuziePos = 0;
         this.getCheeseNum = 0;
         this.moveMade = 0;
-        this.isFree = true;
+        this.isWonderingFree = true;
         try {
             Scanner mapFile = new Scanner(new BufferedReader(new FileReader(filename)));
             //--------------------------------- get city grid size---------------------------------------
