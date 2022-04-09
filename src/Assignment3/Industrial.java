@@ -17,4 +17,12 @@ public class Industrial extends Flight{
         }
         else throw new InvalidBookingException("wrong booking");
     }
+
+    @Override
+    public String toString() {
+        String ans="Industrial Flight "+this.id+" has a payload size of "+this.loads.size();
+//        return "Should print Commercial Flight [a number] has a payload size of 0";
+        return ans;
+    }
+
 }
