@@ -16,4 +16,7 @@ abstract public class Flight extends Item {
         //dummy for polymorphism
         return "";
     }
+    public Flight() {
+        super();
+    }
 }

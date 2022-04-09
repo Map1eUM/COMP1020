@@ -19,4 +19,14 @@ public class Commercial extends Flight {
     }
 
 
+
+    public Commercial() {
+        super();
+        this.id = 1;
+        for (int i = 0; i < 9; ++i)
+            this.id *= 10;
+        this.id += itemNum;
+
+    }
+
 }

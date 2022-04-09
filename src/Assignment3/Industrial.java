@@ -24,5 +24,12 @@ public class Industrial extends Flight{
 //        return "Should print Commercial Flight [a number] has a payload size of 0";
         return ans;
     }
+    public Industrial() {
+        super();
+        this.id = 2;
+        for (int i = 0; i < 9; ++i)
+            this.id *= 10;
+        this.id += itemNum;
+    }
 
 }
