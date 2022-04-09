@@ -7,7 +7,8 @@ abstract public class Flight {
     protected static int MAX_WEIGHT=200;
     protected static int MAX_PAYLOAD=100;
 
-    public void book(Payload payload) {
+    public void book(Payload payload) throws InvalidBookingException {
+
     }
 
 }
