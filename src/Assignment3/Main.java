@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         Airline newFlight = new Airline();
-        FILE_NAME = "C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment3\\TestPhase1.txt";
+        FILE_NAME = "C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment3\\TestPhase4.txt";
         readInputFile(FILE_NAME, newFlight);
     }
 
@@ -25,11 +25,9 @@ public class Main {
                     processComment(S);
                 } else {
                     String[] command = S.split(" ");
-                    //debug
-                    println(command);
                     try {
-
-                    } catch (Exception e) {
+                        parseCommand(command, airline);
+                    } catch (InvalidInputException e) {
                         System.out.println(e.getMessage());
                     }
                 }
@@ -42,10 +40,25 @@ public class Main {
 
     public static void parseCommand(String[] tokens, Airline air) throws InvalidInputException {
         //for phase 1
-        throw new InvalidInputException("InvalidInputException: Command not found");
-//        switch (tokens[0]) {
-//
-//        }
+        switch (tokens[0]) {
+            case "CREATE-FLIGHT":
+                switch (tokens[1]) {
+                    case "C":
+                        System.out.println(air.addFlight('C'));
+                        break;
+                    case "I":
+                        System.out.println(air.addFlight('I'));
+                        break;
+                    default:
+                        throw new InvalidInputException("InvalidInputException: Flight Creation Command Incorrect");
+                }
+                break;
+            case "GET-FLIGHT":
+                Flight searchedFlight = air.getFlight(Integer.parseInt(tokens[1]));
+                if (searchedFlight != null) System.out.println(searchedFlight);
+                else System.out.println("Flight "+Integer.parseInt(tokens[1])+" not found");
+                break;
+        }
     }
 
     public static void processComment(String data) {

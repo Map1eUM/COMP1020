@@ -8,6 +8,7 @@ abstract public class Flight extends Item {
     protected static int MAX_PAYLOAD = 100;
 
     public void book(Payload payload) throws InvalidBookingException {
+        /* empty method for polymorphism */
 
     }
 

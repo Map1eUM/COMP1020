@@ -14,8 +14,5 @@ public abstract class Payload extends Item {
         return 0;
     }
 
-    public Payload() {
-        //Delete this constructor once Phase 5 is complete!
-    }
 
 }
