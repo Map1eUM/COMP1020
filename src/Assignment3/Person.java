@@ -11,16 +11,7 @@ public class Person extends Payload {
         this.id = 3;
         for (int i = 0; i < idLen - 1; ++i)
             this.id *= 10;
-        this.id += itemNum;
-    }
-
-    private int digit(int x) {
-        int ans = 0;
-        while (x > 0) {
-            x /= 10;
-            ans++;
-        }
-        return ans;
+        this.id += itemNum-1;
     }
 
     @Override

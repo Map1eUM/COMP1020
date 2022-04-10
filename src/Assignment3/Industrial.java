@@ -29,7 +29,7 @@ public class Industrial extends Flight{
         this.id = 2;
         for (int i = 0; i < idLen-1; ++i)
             this.id *= 10;
-        this.id += itemNum;
+        this.id += itemNum-1;
     }
 
 }

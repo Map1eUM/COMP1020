@@ -33,7 +33,7 @@ public class Main {
                 }
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }
@@ -56,8 +56,35 @@ public class Main {
             case "GET-FLIGHT":
                 Flight searchedFlight = air.getFlight(Integer.parseInt(tokens[1]));
                 if (searchedFlight != null) System.out.println(searchedFlight);
-                else System.out.println("Flight "+Integer.parseInt(tokens[1])+" not found");
+                else System.out.println("Flight " + Integer.parseInt(tokens[1]) + " not found");
                 break;
+            case "CREATE-PAYLOAD":
+                Payload.payloadFactory(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
+                break;
+            case "GET-PAYLOAD":
+                if (air.getPayload(Integer.parseInt(tokens[1])) != null)
+                    System.out.println(air.getPayload(Integer.parseInt(tokens[1])));
+                else System.out.println("No such payload exist");
+                break;
+            case "ASSIGN-PAYLOAD":
+                try {
+                    int flightID = Integer.parseInt(tokens[1]);
+                    int payloadID = Integer.parseInt(tokens[2]);
+                    Flight reqFlight = air.getFlight(flightID);
+                    Payload reqPayload = air.getPayload(payloadID);
+                    if (reqFlight == null || reqPayload == null)
+                        throw new InvalidInputException("No such flight or payload");
+                    reqFlight.book(reqPayload);
+                } catch (NumberFormatException e) {
+                    System.out.println(e.getMessage());
+                } catch (InvalidInputException e) {
+                    //although test template has catch too but I will still add catch here, it also work
+                    System.out.println(e.getMessage());
+                } catch (InvalidBookingException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+
         }
     }
 

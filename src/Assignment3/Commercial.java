@@ -25,7 +25,7 @@ public class Commercial extends Flight {
         this.id = 1;
         for (int i = 0; i < idLen-1; ++i)
             this.id *= 10;
-        this.id += itemNum;
+        this.id += itemNum-1;
 
     }
 

@@ -5,13 +5,12 @@ public class Employee extends Person {
     protected String job;
     private static int empNum;
 
-    public Employee(double w, String firstName, String lastName) {
+    public Employee(double w, String firstName, String lastName,String job) {
         super(w, firstName, lastName);
         this.empID = 5;
-        for (int i = 0; i < idLen - 1; ++i)
-            this.id *= 10;
         this.empID += empNum;
         ++empNum;
+        this.job=job;
     }
 
     public boolean hasJob(String isItThisJob) {
