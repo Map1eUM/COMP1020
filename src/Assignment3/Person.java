@@ -25,6 +25,6 @@ public class Person extends Payload {
 
     @Override
     public String toString() {
-       return String.format("ID: %d, Weight: %4d kg, Name: %s",this.id,this.weight,this.firstName);
+        return super.toString() + ", Name: " + this.firstName;
     }
 }

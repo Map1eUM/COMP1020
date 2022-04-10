@@ -14,5 +14,9 @@ public abstract class Payload extends Item {
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return String.format("ID: %d, Weight: %4d kg",this.id,this.weight);
+    }
 
 }

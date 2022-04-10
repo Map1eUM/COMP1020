@@ -14,4 +14,12 @@ public class Employee extends Person {
         ++empNum;
     }
 
+    public boolean hasJob(String isItThisJob) {
+        return this.job.equals(isItThisJob);
+    }
+
+    public String toString() {
+        return super.toString() + ", EMP: " + this.empID + ", Job: " + this.job;
+    }
+
 }
