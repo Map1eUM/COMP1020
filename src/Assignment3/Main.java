@@ -2,8 +2,10 @@ package Assignment3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 import java.util.Scanner;
 
+import static processing.core.PApplet.print;
 import static processing.core.PApplet.println;
 
 public class Main {
@@ -11,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         Airline newFlight = new Airline();
-        FILE_NAME = "C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment3\\TestPhase4.txt";
+        FILE_NAME = "C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment3\\TestPhase8.txt";
         readInputFile(FILE_NAME, newFlight);
     }
 
@@ -59,7 +61,20 @@ public class Main {
                 else System.out.println("Flight " + Integer.parseInt(tokens[1]) + " not found");
                 break;
             case "CREATE-PAYLOAD":
-                Payload.payloadFactory(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
+//                println(tokens);
+                switch (tokens[1]) {
+                    case "P":
+                        Payload.payloadFactory(tokens[1], tokens[2], tokens[3], tokens[4], null);
+                        break;
+                    case "E":
+                        Payload.payloadFactory(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
+                        break;
+                    case "C":
+                        Payload.payloadFactory(tokens[1], tokens[2], null, null, null);
+                        break;
+                    default:
+                        throw new InvalidInputException("Not a valid payload type");
+                }
                 break;
             case "GET-PAYLOAD":
                 if (air.getPayload(Integer.parseInt(tokens[1])) != null)
@@ -93,7 +108,9 @@ public class Main {
                 } catch (NumberFormatException e) {
                     System.out.println(e.getMessage());
                 }
-
+                break;
+            default:
+                throw new InvalidInputException("No such command");
         }
     }
 

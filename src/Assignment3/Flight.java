@@ -39,10 +39,10 @@ abstract public class Flight extends Item {
     }
 
     public String doTakeoff() {
-        if (!canTakeoff()) return "Can't take off!";
+        if (!canTakeoff()) return "Flight "+this.getID()+" can not take off";
         else {
             hasTakenoff = true;
-            return "Now taken off!";
+            return "Flight "+this.getID()+" takes off at the speed of light!";
         }
     }
 
