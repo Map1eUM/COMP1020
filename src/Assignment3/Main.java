@@ -84,6 +84,15 @@ public class Main {
                     System.out.println(e.getMessage());
                 }
                 break;
+            case "TAKEOFF":
+                try {
+                    int flightID = Integer.parseInt(tokens[1]);
+                    Flight reqFlight = air.getFlight(flightID);
+                    if (reqFlight == null) throw new InvalidInputException("Flight does not exist");
+                    else System.out.println(reqFlight.doTakeoff());
+                } catch (NumberFormatException e) {
+                    System.out.println(e.getMessage());
+                }
 
         }
     }
