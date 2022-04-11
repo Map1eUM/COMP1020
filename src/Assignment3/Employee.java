@@ -5,12 +5,13 @@ public class Employee extends Person {
     protected String job;
     private static int empNum;
 
-    public Employee(double w, String firstName, String lastName,String job) {
+    public Employee(double w, String firstName, String lastName, String job) {
         super(w, firstName, lastName);
         this.empID = 5;
+        this.empID *= 1e8;
         this.empID += empNum;
         ++empNum;
-        this.job=job;
+        this.job = job;
     }
 
     public boolean hasJob(String isItThisJob) {

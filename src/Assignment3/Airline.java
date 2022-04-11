@@ -5,14 +5,19 @@ import java.util.ArrayList;
 import static processing.core.PApplet.println;
 
 public class Airline {
+    //assume there are multiple airlines.
 
-    protected static ArrayList<Flight> flightTrack;
-    protected static ArrayList<Payload> payloadTrack;
+    protected ArrayList<Flight> flightTrack;
+    protected ArrayList<Payload> payloadTrack;
+
+    //for bonus
+    protected static int MAXN = (int) 1e5;
+    protected boolean[] isBooked;
 
     public Airline() {
         flightTrack = new ArrayList<Flight>();
         payloadTrack = new ArrayList<Payload>();
-
+        isBooked = new boolean[MAXN];
     }
 
     public void addPayload(Payload thePayload) {

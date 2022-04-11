@@ -15,6 +15,7 @@ abstract public class Flight extends Item {
         if(payload.getWeight() > MAX_WEIGHT) throw new InvalidBookingException("The weight of payload exceeded the maximum weight");
         if(this.loads.size() >= MAX_PAYLOAD) throw new InvalidBookingException("There is no space for new payload");
 
+
     }
 
     @Override
@@ -28,7 +29,6 @@ abstract public class Flight extends Item {
         hasTakenoff = false;
     }
 
-    @NotNull
     public boolean canTakeoff() {
         if (hasTakenoff) return false;
         if (this.loads.size() < 2) return false;

@@ -12,9 +12,9 @@ public class Main {
     private static String FILE_NAME;
 
     public static void main(String[] args) {
-        Airline newFlight = new Airline();
+        Airline newAir = new Airline();
         FILE_NAME = "C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment3\\TestPhase8.txt";
-        readInputFile(FILE_NAME, newFlight);
+        readInputFile(FILE_NAME, newAir);
     }
 
     public static void readInputFile(String fileName, Airline airline) {
