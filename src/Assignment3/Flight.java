@@ -11,7 +11,9 @@ abstract public class Flight extends Item {
     boolean hasTakenoff;
 
     public void book(Payload payload) throws InvalidBookingException {
-        /* empty method for polymorphism */
+        /* basic requirement for valid payload, more details implemented by polymorphism */
+        if(payload.getWeight() > MAX_WEIGHT) throw new InvalidBookingException("The weight of payload exceeded the maximum weight");
+        if(this.loads.size() >= MAX_PAYLOAD) throw new InvalidBookingException("There is no space for new payload");
 
     }
 
