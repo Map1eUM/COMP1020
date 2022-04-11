@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         Airline newAir = new Airline();
-        FILE_NAME = "C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment3\\TestPhase8.txt";
+        FILE_NAME = "C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment3\\BONUS_DATA.dat";
         readInputFile(FILE_NAME, newAir);
     }
 
@@ -64,13 +64,13 @@ public class Main {
 //                println(tokens);
                 switch (tokens[1]) {
                     case "P":
-                        Payload.payloadFactory(tokens[1], tokens[2], tokens[3], tokens[4], null);
+                        air.addPayload(Payload.payloadFactory(tokens[1], tokens[2], tokens[3], tokens[4], null));
                         break;
                     case "E":
-                        Payload.payloadFactory(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
+                        air.addPayload(Payload.payloadFactory(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]));
                         break;
                     case "C":
-                        Payload.payloadFactory(tokens[1], tokens[2], null, null, null);
+                        air.addPayload(Payload.payloadFactory(tokens[1], tokens[2], null, null, null));
                         break;
                     default:
                         throw new InvalidInputException("Not a valid payload type");
@@ -112,6 +112,8 @@ public class Main {
             default:
                 throw new InvalidInputException("No such command");
         }
+        //test for bonus
+        println(air.flightTrack.get(0).loads.size());
     }
 
     public static void processComment(String data) {

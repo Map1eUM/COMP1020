@@ -1,17 +1,24 @@
 package Assignment3;
 
+import static processing.core.PApplet.println;
+
 public class Industrial extends Flight{
     @Override
     public void book(Payload payload) throws InvalidBookingException {
         super.book(payload);
+        println(payload.isPayloadAdded());
+        // won't add twice or add to multiple flights. BONUS done!
+        if (payload.isPayloadAdded()) return;
         if(payload instanceof Cargo) {
             //validated
             super.loads.add(payload);
+            payload.isAdded=true;
         }
         else if(payload instanceof Person) {
             if (payload instanceof Employee) {
                 //validated
                 super.loads.add(payload);
+                payload.isAdded=true;
             }
             else throw new InvalidBookingException("Booking not valid");
         }

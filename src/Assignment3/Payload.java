@@ -3,10 +3,12 @@ package Assignment3;
 public abstract class Payload extends Item {
 
     protected double weight;
+    protected boolean isAdded;
 
     public Payload(double wgt) {
         super();
         this.weight = wgt;
+        this.isAdded=false;
     }
 
     public double getWeight() {
@@ -27,6 +29,10 @@ public abstract class Payload extends Item {
         else if (payloadType.equals("C")) return new Cargo(wgt);
         //this shouldn't happen
         else throw new InvalidInputException("This is not a valid payload type");
+    }
+
+    public boolean isPayloadAdded() {
+        return this.isAdded;
     }
 
     @Override
