@@ -4,13 +4,17 @@ import static processing.core.PApplet.print;
 
 public class TestLinkedList {
     public static void test() {
-        try {
-            String S = "a12";
-            int x = Integer.parseInt(S);
-        } catch (Exception e) {
-            print("AA");
-        }
-        print("BB");
+//        try {
+//            String S = "a12";
+//            int x = Integer.parseInt(S);
+//        } catch (Exception e) {
+//            print("AA");
+//        }
+//        print("BB");
+        String S1="AAA";
+        String S2=S1;
+        S1=null;
+        print(S2);
     }
     public static void main(String[] args) {
 

@@ -30,7 +30,7 @@ public class DoublyLinkedList {
     public Node getLast() {
         return last;
     }
-	
+
 	/*
 	End of the provided code.
 	*/
@@ -64,7 +64,7 @@ public class DoublyLinkedList {
     }
 
     private String toStringRec(Node node) {
-        if (node == null) return " >>";
+        if (node == null) return ">>";
         return String.valueOf(node.getData()) + " " + toStringRec(node.getNext());
     }
 
@@ -105,5 +105,35 @@ public class DoublyLinkedList {
         }
     }
 
+    private void removeNode(Node node) {
+        Node pre = node.getPrevious();
+        Node nxt = node.getNext();
+
+        if (pre != null && nxt != null) {
+            //cannot just node = null cuz it will break the link.
+            pre.setNext(nxt);
+            nxt.setPrevious(pre);
+            //no need to set node = null because java should auto collect it.
+        } else {
+            if (pre == null) node.getNext().setPrevious(null);
+            if (nxt == null) node.getPrevious().setNext(null);
+        }
+    }
+
+    private Node removeRec(int index, Node node) {
+        if (index == 0) {
+            //save the reference to the deleted node in the heap!
+            Node ansNode = node;
+            removeNode(node);
+            return ansNode;
+        }
+        return removeRec(index - 1, node.getNext());
+    }
+
+    public Node remove(int index) {
+        if (index >= this.size()) {
+            throw new IndexOutOfBoundsException("Seems like we have an invalid index!");
+        } else return removeRec(index, this.first);
+    }
 
 }
