@@ -1,5 +1,11 @@
 package Assignment4;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Scanner;
+
 public class DoublyLinkedList {
 	/*
 	The following code is provided. You are not allowed to modify it.
@@ -42,6 +48,7 @@ public class DoublyLinkedList {
     public void addEnd(Number data) {
         Node oldEnd = this.last;
         this.last = new Node(data, this.last, null);
+        //this is equivalent to: size > 0 setnext, size == 0, first = last!
         if (oldEnd != null) oldEnd.setNext(this.last);
         //important special case!
         if (this.first == null) this.first = this.last;
@@ -72,6 +79,30 @@ public class DoublyLinkedList {
 
     public String toStringReversed() {
         return "<< " + toStringReversedRec(this.last);
+    }
+
+    public static DoublyLinkedList createList(String filename) {
+        try {
+            Scanner reader = new Scanner(new FileReader(filename));
+            DoublyLinkedList newList = new DoublyLinkedList();
+            parseScanner(reader, newList);
+            return newList;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        //return never reach here!
+    }
+
+    private static void parseScanner(Scanner reader, DoublyLinkedList newList) {
+        if (!reader.hasNext()) return;
+        try {
+            newList.addEnd(NumberFormat.getInstance().parse(reader.next()));
+            parseScanner(reader, newList);
+        } catch (ParseException e) {
+            //This should never happen, unless you pass something is not even a number.
+//            throw new RuntimeException(e);
+            parseScanner(reader, newList);
+        }
     }
 
 
