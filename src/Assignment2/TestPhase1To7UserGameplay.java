@@ -1,5 +1,7 @@
 package Assignment2;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -140,7 +142,7 @@ public class TestPhase1To7UserGameplay {
     
   } // main 
   
-  public static void printArrayNoCommas(char [] arr) {
+  public static void printArrayNoCommas(char @NotNull [] arr) {
     System.out.print("[");
     for (int i = 0; i<arr.length-1; i++)
       System.out.print(arr[i] + " ");

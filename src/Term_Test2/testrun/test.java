@@ -46,17 +46,17 @@ public class test {
         try {
             Scanner reader = new Scanner(new File(inputFileName));
             while (reader.hasNextLine()) {
-                int minLen= Integer.parseInt(String.valueOf(reader.nextLine()));
+                int minLen = Integer.parseInt(String.valueOf(reader.nextLine()));
 //                reader.nextLine();
                 println(minLen);
 
                 //get pass the integer
-                String curLine=reader.nextLine();
-                int curLen=0;
-                for(int i=0;i<curLine.length();++i)
-                    if(curLine.charAt(i)!=' ')
+                String curLine = reader.nextLine();
+                int curLen = 0;
+                for (int i = 0; i < curLine.length(); ++i)
+                    if (curLine.charAt(i) != ' ')
                         curLen++;
-                if(curLen>minLen)System.out.println(curLine);
+                if (curLen > minLen) System.out.println(curLine);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

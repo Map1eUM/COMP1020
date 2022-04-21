@@ -6,7 +6,6 @@ public class Industrial extends Flight{
     @Override
     public void book(Payload payload) throws InvalidBookingException {
         super.book(payload);
-        println(payload.isPayloadAdded());
         // won't add twice or add to multiple flights. BONUS done!
         if (payload.isPayloadAdded()) return;
         if(payload instanceof Cargo) {

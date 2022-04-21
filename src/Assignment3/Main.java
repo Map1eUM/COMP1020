@@ -112,8 +112,8 @@ public class Main {
             default:
                 throw new InvalidInputException("No such command");
         }
-        //test for bonus
-        println(air.flightTrack.get(0).loads.size());
+        //test for bonus, you use need to un-comment and see 1, 1
+//        println(air.flightTrack.get(0).loads.size());
     }
 
     public static void processComment(String data) {
