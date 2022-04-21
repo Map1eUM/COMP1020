@@ -32,11 +32,19 @@ public class DoublyLinkedList {
     //Add your code below.
 
     public void addFront(Number data) {
+        Node oldFront = this.first;
         this.first = new Node(data, null, this.first);
+        if (oldFront != null) oldFront.setPrevious(this.first);
+        //important special case!
+        if (last == null) this.last = this.first;
     }
 
     public void addEnd(Number data) {
+        Node oldEnd = this.last;
         this.last = new Node(data, this.last, null);
+        if (oldEnd != null) oldEnd.setNext(this.last);
+        //important special case!
+        if (this.first == null) this.first = this.last;
     }
 
     public int size() {
@@ -48,9 +56,18 @@ public class DoublyLinkedList {
         return sizeRec(node.getNext()) + 1;
     }
 
+    private String toStringRec(Node node) {
+        if (node == null) return " >>";
+        return String.valueOf(node.getData()) + " " + toStringRec(node.getNext());
+    }
+
+    public String toString() {
+        return "<< " + toStringRec(this.first);
+    }
+
     private String toStringReversedRec(Node node) {
         if (node == null) return " >>";
-        return String.valueOf(node.getData()) + toStringReversedRec(node.getNext());
+        return String.valueOf(node.getData()) + " " + toStringReversedRec(node.getPrevious());
     }
 
     public String toStringReversed() {
