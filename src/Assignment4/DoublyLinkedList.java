@@ -157,54 +157,23 @@ public class DoublyLinkedList {
     }
 
     public void orderedInsertRec(Node toInsert, Node current) {
-        if (toInsert == null) return;
         if (current == null) {
             this.first = this.last = toInsert;
             return;
         }
-        Node preToIns = toInsert.getPrevious();
-        Node nxtToIns = toInsert.getNext();
-        Node preCurrent = current.getPrevious();
-        Node nxtCurrent = current.getNext();
-
+        Node curNxt = current.getNext();
         if (toInsert.compareTo(current) > 0) {
-            if (nxtCurrent == null) {
-                current.setNext(toInsert);
-                toInsert.setPrevious(current);
-                this.last = toInsert;
-                return;
-            }
-            if (nxtCurrent != toInsert) {
-                current.setNext(toInsert);
-                toInsert.setPrevious(current);
-                nxtCurrent.setPrevious(toInsert);
-                toInsert.setNext(nxtCurrent);
-                if(preToIns!=null)preToIns.setNext(nxtToIns);
-                if(nxtToIns!=null) nxtToIns.setPrevious(preToIns);
-                return;
-            } else return;
-
-        } else {
-            if (current.getPrevious() != null)
-                orderedInsertRec(toInsert, current.getPrevious());
-            else {
-                //put toInsert to first one
-                this.first = toInsert;
-                toInsert.setPrevious(null);
-                current.setPrevious(toInsert);
-                toInsert.setNext(current);
-                if (nxtToIns == null) preToIns.setNext(null);
-                else {
-                    nxtToIns.setPrevious(preToIns);
-                    preToIns.setNext(nxtToIns);
-                }
-            }
-
-
+            //insert to next to current
+            current.setNext(toInsert);
+            toInsert.setPrevious(current);
+            if (curNxt != null) curNxt.setPrevious(toInsert);
+            toInsert.setNext(curNxt);
+            toInsert.getPrevious().setNext(null);
+            return;
         }
     }
 
-    private void insertionSortRec(Node curNode) {
+    private void insertionSortRec(Node curNode,DoublyLinkedList newLst) {
         //start from the second one! if only one or no element this method shouldn't be called!
 //        System.out.println("STACK!");
 
@@ -216,8 +185,7 @@ public class DoublyLinkedList {
         DoublyLinkedList newlst = new DoublyLinkedList();
         if(this.size()<=1) return;
 
-
-        insertionSortRec(this.last);
+        insertionSortRec(this.first,newlst);
     }
 
 }
