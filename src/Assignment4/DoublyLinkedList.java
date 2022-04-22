@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class DoublyLinkedList {
@@ -156,76 +157,67 @@ public class DoublyLinkedList {
     }
 
     public void orderedInsertRec(Node toInsert, Node current) {
-
-        //---------------------------------
+        if (toInsert == null) return;
         if (current == null) {
-            //Assume this list is empty. special case
             this.first = this.last = toInsert;
             return;
         }
-        //This is the problem!
-//        if (current.getPrevious() == null) {
-//            //the toInsert is smallest for current part of linkedlist!
-//            if (toInsert.compareTo(current) < 0) {
-//                System.out.println("TOINSERT:"+toInsert);
-//                System.out.println("CURRENT"+current);
-//                orderedInsertRec(toInsert, current.getPrevious());
-//            }
-//            else {
-//                //BIGGER OR EQUAL TO CURRENT
-//                System.out.println("SET UP!");
-//                System.out.println("TOINSERT:"+toInsert);
-//                System.out.println("CURRENT"+current);
-//
-//                Node nxtCurrent = current.getNext();
-//                current.setNext(toInsert);
-//                toInsert.setPrevious(current);
-//                if (nxtCurrent != null) toInsert.setNext(nxtCurrent);
-//                if (nxtCurrent != null) nxtCurrent.setPrevious(toInsert);
-////            else this.last=toInsert;
-//                return;
-//            }
-//            this.first = toInsert;
-//            return;
-//        }
-        if (toInsert.compareTo(current) < 0) {
-            System.out.println("TOINSERT:"+toInsert);
-            System.out.println("CURRENT"+current);
-            if(current.getPrevious()!=null) orderedInsertRec(toInsert, current.getPrevious());
-            else {
-                current.setPrevious(toInsert);
-                toInsert.setNext(current);
-                this.first = toInsert;
+        Node preToIns = toInsert.getPrevious();
+        Node nxtToIns = toInsert.getNext();
+        Node preCurrent = current.getPrevious();
+        Node nxtCurrent = current.getNext();
+
+        if (toInsert.compareTo(current) > 0) {
+            if (nxtCurrent == null) {
+                current.setNext(toInsert);
+                toInsert.setPrevious(current);
+                this.last = toInsert;
                 return;
             }
-        }
-        else {
-            //BIGGER OR EQUAL TO CURRENT
-            System.out.println("SET UP!");
-            System.out.println("TOINSERT:"+toInsert);
-            System.out.println("CURRENT"+current);
+            if (nxtCurrent != toInsert) {
+                current.setNext(toInsert);
+                toInsert.setPrevious(current);
+                nxtCurrent.setPrevious(toInsert);
+                toInsert.setNext(nxtCurrent);
+                if(preToIns!=null)preToIns.setNext(nxtToIns);
+                if(nxtToIns!=null) nxtToIns.setPrevious(preToIns);
+                return;
+            } else return;
 
-            Node nxtCurrent = current.getNext();
-            current.setNext(toInsert);
-            toInsert.setPrevious(current);
-            if (nxtCurrent != null) toInsert.setNext(nxtCurrent);
-            if (nxtCurrent != null) nxtCurrent.setPrevious(toInsert);
-//            else this.last=toInsert;
-            return;
+        } else {
+            if (current.getPrevious() != null)
+                orderedInsertRec(toInsert, current.getPrevious());
+            else {
+                //put toInsert to first one
+                this.first = toInsert;
+                toInsert.setPrevious(null);
+                current.setPrevious(toInsert);
+                toInsert.setNext(current);
+                if (nxtToIns == null) preToIns.setNext(null);
+                else {
+                    nxtToIns.setPrevious(preToIns);
+                    preToIns.setNext(nxtToIns);
+                }
+            }
+
+
         }
     }
 
     private void insertionSortRec(Node curNode) {
         //start from the second one! if only one or no element this method shouldn't be called!
-        System.out.println("STACK!");
-//        orderedInsertRec(curNode, curNode.getPrevious());
-        if (curNode.getNext() != null) insertionSortRec(curNode.getNext());
+//        System.out.println("STACK!");
+
+        orderedInsertRec(curNode,curNode.getPrevious());
     }
 
     public void insertionSort() {
         //already sorted.
-        if (this.size() == 1 || this.size() == 0) return;
-        else insertionSortRec(this.first.getNext());
+        DoublyLinkedList newlst = new DoublyLinkedList();
+        if(this.size()<=1) return;
+
+
+        insertionSortRec(this.last);
     }
 
 }

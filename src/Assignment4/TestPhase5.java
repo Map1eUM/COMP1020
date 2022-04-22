@@ -31,18 +31,18 @@ public class TestPhase5
 		System.out.println();  //spacing
 
 		//Testing the insertionSort
-//		DoublyLinkedList toSort = DoublyLinkedList.createList("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment4\\list.txt");
-//		System.out.println("Before sorting:\n" + toSort);
-//		toSort.insertionSort();
-//		System.out.println("After sorting:\n" + toSort);
-//
-//		System.out.println();  //spacing
-//
-//		//2nd test for insertionSort
-//		DoublyLinkedList toSort2 = DoublyLinkedList.createList("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment4\\list2.txt");
-//		System.out.println("Before sorting:\n" + toSort2);
-//		toSort2.insertionSort();
-//		System.out.println("After sorting:\n" + toSort2);
+		DoublyLinkedList toSort = DoublyLinkedList.createList("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment4\\list.txt");
+		System.out.println("Before sorting:\n" + toSort);
+		toSort.insertionSort();
+		System.out.println("After sorting:\n" + toSort);
+
+		System.out.println();  //spacing
+
+		//2nd test for insertionSort
+		DoublyLinkedList toSort2 = DoublyLinkedList.createList("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment4\\list2.txt");
+		System.out.println("Before sorting:\n" + toSort2);
+		toSort2.insertionSort();
+		System.out.println("After sorting:\n" + toSort2);
 
 	}
 }
