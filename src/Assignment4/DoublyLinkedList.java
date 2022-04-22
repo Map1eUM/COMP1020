@@ -73,7 +73,7 @@ public class DoublyLinkedList {
     }
 
     private String toStringReversedRec(Node node) {
-        if (node == null) return " >>";
+        if (node == null) return ">>";
         return String.valueOf(node.getData()) + " " + toStringReversedRec(node.getPrevious());
     }
 
@@ -115,8 +115,16 @@ public class DoublyLinkedList {
             nxt.setPrevious(pre);
             //no need to set node = null because java should auto collect it.
         } else {
-            if (pre == null) node.getNext().setPrevious(null);
-            if (nxt == null) node.getPrevious().setNext(null);
+            if (pre == null) {
+                node.getNext().setPrevious(null);
+                //Finally debugged this::!!
+                this.first = node.getNext();
+            }
+
+            if (nxt == null) {
+                node.getPrevious().setNext(null);
+                this.last = node.getPrevious();
+            }
         }
     }
 
@@ -132,8 +140,18 @@ public class DoublyLinkedList {
 
     public Node remove(int index) {
         if (index >= this.size()) {
-            throw new IndexOutOfBoundsException("Seems like we have an invalid index!");
+            throw new IndexOutOfBoundsException("Seems like we have an invalid index!\n");
         } else return removeRec(index, this.first);
     }
 
+    private Node findMaxRec(Node node,Node maxNode) {
+        if (node.compareTo(maxNode) > 0) maxNode = node;
+        if (node.getNext() == null) return maxNode;
+        else return findMaxRec(node.getNext(), maxNode);
+    }
+
+    public Node findMax() {
+        if (this.size() == 0) return null;
+        return findMaxRec(this.first, this.first);
+    }
 }

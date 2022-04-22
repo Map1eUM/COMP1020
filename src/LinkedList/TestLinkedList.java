@@ -15,6 +15,12 @@ public class TestLinkedList {
         String S2=S1;
         S1=null;
         print(S2);
+        double x=124152312;
+        double y=124152312;
+//        print(x instanceof Integer);
+//        print(y instanceof Double);
+        print(x==y);
+
     }
     public static void main(String[] args) {
 

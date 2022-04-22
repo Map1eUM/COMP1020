@@ -11,7 +11,7 @@ public class TestPhase3
 
 		for (int i = 0; i < 8; i++) //remove 5 items at position 2
 		{
-			Node removed = myList.remove(2);
+			Node removed = myList.remove(0);
 			System.out.println("The removed LinkedList.Node contained: " + removed.getData());
 
 			System.out.println("The list has a size of: " + myList.size());
