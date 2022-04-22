@@ -1,5 +1,8 @@
 package LinkedList;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 import static processing.core.PApplet.print;
 
 public class TestLinkedList {
@@ -22,8 +25,11 @@ public class TestLinkedList {
         print(x==y);
 
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
+        FileWriter x=new FileWriter("output.txt");
+        x.write("23424");
+        x.close();
 //        Node x1=new Node(12);
 //        Node x2= x1;
 //        print(x1==x2);

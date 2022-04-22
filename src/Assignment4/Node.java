@@ -87,7 +87,9 @@ public class Node {
         if(data instanceof Double) S+="Double:";
         else if( data instanceof Long) S+= "Long:";
         else if(data instanceof Integer) S+="Integer:";
-        return S+String.valueOf(this.data.doubleValue());
+        S=S+String.valueOf(this.data.doubleValue());
+//        if(this.getNext()!=null) S+="NEXT: "+this.getNext().toString();
+        return S;
     }
 
 

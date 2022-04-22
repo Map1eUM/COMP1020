@@ -7,6 +7,9 @@ import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import static processing.core.PApplet.print;
+import static processing.core.PApplet.println;
+
 public class DoublyLinkedList {
 	/*
 	The following code is provided. You are not allowed to modify it.
@@ -157,54 +160,59 @@ public class DoublyLinkedList {
     }
 
     public void orderedInsertRec(Node toInsert, Node current) {
+        println(toInsert.toString()+"      "+current.toString());
         if (current == null) {
             //Assume this list is empty. special case
             this.first = this.last = toInsert;
             return;
         }
         if (toInsert.compareTo(current) < 0) {
-//            System.out.println("TOINSERT:" + toInsert);
-//            System.out.println("CURRENT" + current);
+//            println(current.getPrevious());
             if (current.getPrevious() != null) orderedInsertRec(toInsert, current.getPrevious());
             else {
+                println("CHANGE THE FIRST! %s %s",toInsert.toString(),current.toString());
+                if (toInsert.getNext() != null) {
+                    toInsert.getNext().setPrevious(toInsert.getPrevious());
+                    println("toInsert.getNext() != null","toInsert.getNext().setPrevious(toInsert.getPrevious())",toInsert.getNext().toString(),toInsert.getPrevious().toString());
+                }
+                if (toInsert.getPrevious() != null) {
+                    toInsert.getPrevious().setNext(toInsert.getNext());
+                    println("toInsert.getPrevious() != null, toInsert.getPrevious().setNext(toInsert.getNext());",toInsert.getPrevious(),toInsert.getNext());
+                }
                 current.setPrevious(toInsert);
                 toInsert.setNext(current);
+                //??
+                toInsert.setPrevious(null);
                 this.first = toInsert;
+                println(this);
                 return;
             }
-        } else {
-            //BIGGER OR EQUAL TO CURRENT
-//            System.out.println("SET UP!");
-//            System.out.println("TOINSERT:" + toInsert);
-//            System.out.println("CURRENT" + current);
-
-            Node nxtCurrent = current.getNext();
+        }
+        else {
+            if(current.getNext()==toInsert) {
+                this.last = toInsert;
+                return;
+            }
+            if (toInsert.getNext() != null) toInsert.getNext().setPrevious(toInsert.getPrevious());
+            if (toInsert.getPrevious() != null) toInsert.getPrevious().setNext(toInsert.getNext());
+            if(current.getNext()!=null) current.getNext().setPrevious(toInsert);
+            toInsert.setNext(current.getNext());
             current.setNext(toInsert);
             toInsert.setPrevious(current);
-            if (nxtCurrent != null) toInsert.setNext(nxtCurrent);
-            if (nxtCurrent != null) nxtCurrent.setPrevious(toInsert);
-            if(nxtCurrent==null) this.last=toInsert;
-
-            System.out.println(this.first.toString()+this.last.toString()+' ' +String.valueOf(this.size()));
-//            else this.last=toInsert;
             return;
         }
     }
+    int x=0;
 
     private void insertionSortRec(Node curNode) {
         //start from the second one! if only one or no element this method shouldn't be called!
         if (curNode == null) return;
-        Node preNode = curNode.getPrevious();
-        Node nxtNode = curNode.getNext();
-        //-----
-        if(curNode.getPrevious()!=null) curNode.getPrevious().setNext(null);
-//        if(curNode.getNext()!=null)curNode.getNext().setPrevious(null);
-//        if(curNode!=null)curNode.setPrevious(null);
-//        if(curNode!=null) curNode.setNext(null);
-        //-----------
-        orderedInsertRec(curNode, preNode);
-        System.out.println("what:"+nxtNode+"\n");
-        insertionSortRec(nxtNode);
+//        println(String.format("This is %d element",++x));
+//        println(curNode);
+        //??
+        Node nxtCurNode=curNode.getNext();
+        orderedInsertRec(curNode, curNode.getPrevious());
+        insertionSortRec(nxtCurNode);
     }
 
     public void insertionSort() {
