@@ -13,8 +13,10 @@ public class TestLinkedList {
 //        print("BB");
         String S1="AAA";
         String S2=S1;
-        double x=124152312;
-        double y=124152312;
+        Node x=new Node(10);
+        Node y=x;
+        x=new Node(20);
+        print(y.data);
 //        print(x instanceof Integer);
 //        print(y instanceof Double);
         print(x==y);

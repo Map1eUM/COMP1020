@@ -27,6 +27,7 @@ public class TestPhase5
 
 		myList.orderedInsertRec(new Node(77.789, null, null), myList.getLast());
 		System.out.println(myList);
+		System.out.println(myList.toStringReversed());
 
 		System.out.println();  //spacing
 
