@@ -3,6 +3,8 @@ package Assignment4;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static processing.core.PApplet.println;
+
 public class TestPhase5
 {
 	public static void main (String[] args) throws IOException {
@@ -33,6 +35,8 @@ public class TestPhase5
 		myList.orderedInsertRec(new Node(77.789, null, null), myList.getLast());
 		System.out.println(myList);
 		System.out.println(myList.toStringReversed());
+//		println(myList.getLast().getNext().getPrevious());
+		println(myList.getFirst());
 
 		System.out.println();  //spacing
 

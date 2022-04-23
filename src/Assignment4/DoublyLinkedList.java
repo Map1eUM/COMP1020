@@ -168,20 +168,21 @@ public class DoublyLinkedList {
 //            println(current.getPrevious());
             if (current.getPrevious() != null) orderedInsertRec(toInsert, current.getPrevious());
             else {
-                if (toInsert.getNext() != null) {
+                if (toInsert.getNext() != null)
                     toInsert.getNext().setPrevious(toInsert.getPrevious());
-                    if (toInsert.getPrevious() != null)
-                        toInsert.getPrevious().setNext(toInsert.getNext());
-                    current.setPrevious(toInsert);
-                    toInsert.setNext(current);
-                    //??
-                    toInsert.setPrevious(null);
-                    this.first = toInsert;
-                    return;
-                }
+                if (toInsert.getPrevious() != null)
+                    toInsert.getPrevious().setNext(toInsert.getNext());
+                current.setPrevious(toInsert);
+                toInsert.setNext(current);
+                //??
+                toInsert.setPrevious(null);
+                this.first = toInsert;
+                return;
+
             }
         } else {
             if (current.getNext() == toInsert) {
+//                println(current,toInsert);
                 this.last = toInsert;
                 return;
             }
@@ -191,6 +192,9 @@ public class DoublyLinkedList {
             toInsert.setNext(current.getNext());
             current.setNext(toInsert);
             toInsert.setPrevious(current);
+
+            //remember to update the last element!
+            if(toInsert.getNext()==null) this.last=toInsert;
             return;
         }
     }
