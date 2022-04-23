@@ -202,7 +202,6 @@ public class DoublyLinkedList {
             return;
         }
     }
-    int x=0;
 
     private void insertionSortRec(Node curNode) {
         //start from the second one! if only one or no element this method shouldn't be called!
