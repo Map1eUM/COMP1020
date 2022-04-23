@@ -78,7 +78,7 @@ public class DoublyLinkedList {
 
     private String toStringReversedRec(Node node) {
         if (node == null) return ">>";
-        return String.valueOf(node.getData()) + " " + toStringReversedRec(node.getPrevious());
+        return node.getData() + " " + toStringReversedRec(node.getPrevious());
     }
 
     public String toStringReversed() {
@@ -124,7 +124,6 @@ public class DoublyLinkedList {
                 //Finally debugged this::!!
                 this.first = node.getNext();
             }
-
             if (nxt == null) {
                 node.getPrevious().setNext(null);
                 this.last = node.getPrevious();
@@ -160,7 +159,6 @@ public class DoublyLinkedList {
     }
 
     public void orderedInsertRec(Node toInsert, Node current) {
-        println(toInsert.toString()+"      "+current.toString());
         if (current == null) {
             //Assume this list is empty. special case
             this.first = this.last = toInsert;
@@ -170,32 +168,26 @@ public class DoublyLinkedList {
 //            println(current.getPrevious());
             if (current.getPrevious() != null) orderedInsertRec(toInsert, current.getPrevious());
             else {
-                println("CHANGE THE FIRST! %s %s",toInsert.toString(),current.toString());
                 if (toInsert.getNext() != null) {
                     toInsert.getNext().setPrevious(toInsert.getPrevious());
-                    println("toInsert.getNext() != null","toInsert.getNext().setPrevious(toInsert.getPrevious())",toInsert.getNext().toString(),toInsert.getPrevious().toString());
+                    if (toInsert.getPrevious() != null)
+                        toInsert.getPrevious().setNext(toInsert.getNext());
+                    current.setPrevious(toInsert);
+                    toInsert.setNext(current);
+                    //??
+                    toInsert.setPrevious(null);
+                    this.first = toInsert;
+                    return;
                 }
-                if (toInsert.getPrevious() != null) {
-                    toInsert.getPrevious().setNext(toInsert.getNext());
-                    println("toInsert.getPrevious() != null, toInsert.getPrevious().setNext(toInsert.getNext());",toInsert.getPrevious(),toInsert.getNext());
-                }
-                current.setPrevious(toInsert);
-                toInsert.setNext(current);
-                //??
-                toInsert.setPrevious(null);
-                this.first = toInsert;
-                println(this);
-                return;
             }
-        }
-        else {
-            if(current.getNext()==toInsert) {
+        } else {
+            if (current.getNext() == toInsert) {
                 this.last = toInsert;
                 return;
             }
             if (toInsert.getNext() != null) toInsert.getNext().setPrevious(toInsert.getPrevious());
             if (toInsert.getPrevious() != null) toInsert.getPrevious().setNext(toInsert.getNext());
-            if(current.getNext()!=null) current.getNext().setPrevious(toInsert);
+            if (current.getNext() != null) current.getNext().setPrevious(toInsert);
             toInsert.setNext(current.getNext());
             current.setNext(toInsert);
             toInsert.setPrevious(current);
@@ -209,7 +201,7 @@ public class DoublyLinkedList {
 //        println(String.format("This is %d element",++x));
 //        println(curNode);
         //??
-        Node nxtCurNode=curNode.getNext();
+        Node nxtCurNode = curNode.getNext();
         orderedInsertRec(curNode, curNode.getPrevious());
         insertionSortRec(nxtCurNode);
     }
