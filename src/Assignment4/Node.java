@@ -82,15 +82,6 @@ public class Node {
 
     }
 
-    public String toString() {
-        String S="";
-        if(data instanceof Double) S+="Double:";
-        else if( data instanceof Long) S+= "Long:";
-        else if(data instanceof Integer) S+="Integer:";
-        S=S+String.valueOf(this.data.doubleValue());
-//        if(this.getNext()!=null) S+="NEXT: "+this.getNext().toString();
-        return S;
-    }
 
 
 }

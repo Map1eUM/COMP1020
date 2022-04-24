@@ -36,7 +36,6 @@ public class TestPhase5
 		System.out.println(myList);
 		System.out.println(myList.toStringReversed());
 //		println(myList.getLast().getNext().getPrevious());
-		println(myList.getFirst());
 
 		System.out.println();  //spacing
 

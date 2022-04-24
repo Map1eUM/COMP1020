@@ -4,11 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.LinkedList;
 import java.util.Scanner;
-
-import static processing.core.PApplet.print;
-import static processing.core.PApplet.println;
 
 public class DoublyLinkedList {
 	/*
@@ -41,6 +37,9 @@ public class DoublyLinkedList {
 
     //Add your code below.
 
+    public void clear() {
+        this.first = this.last = null;
+    }
     public void addFront(Number data) {
         Node oldFront = this.first;
         this.first = new Node(data, null, this.first);
@@ -99,14 +98,25 @@ public class DoublyLinkedList {
 
     private static void parseScanner(Scanner reader, DoublyLinkedList newList) {
         if (!reader.hasNext()) return;
-        try {
-            newList.addEnd(NumberFormat.getInstance().parse(reader.next()));
-            parseScanner(reader, newList);
-        } catch (ParseException e) {
-            //This should never happen, unless you pass something is not even a number.
-//            throw new RuntimeException(e);
+        else {
+            if(reader.hasNextInt()) newList.addEnd(reader.nextInt());
+            else if(reader.hasNextLong()) newList.addEnd(reader.nextLong());
+            else if(reader.hasNextDouble()) newList.addEnd(reader.nextDouble());
+            else {
+                //simply filtered the non-number data
+                if (reader.hasNext()) reader.next();
+            }
             parseScanner(reader, newList);
         }
+
+//        try {
+//            newList.addEnd(NumberFormat.getInstance().parse(reader.next()));
+//            parseScanner(reader, newList);
+//        } catch (ParseException e) {
+//            //This should never happen, unless you pass something is not even a number.
+////            throw new RuntimeException(e);
+//            parseScanner(reader, newList);
+//        }
     }
 
     private void removeNode(Node node) {
@@ -165,7 +175,6 @@ public class DoublyLinkedList {
             return;
         }
         if (toInsert.compareTo(current) < 0) {
-//            println(current.getPrevious());
             if (current.getPrevious() != null) orderedInsertRec(toInsert, current.getPrevious());
             else {
                 if (toInsert.getNext() != null)
@@ -182,7 +191,6 @@ public class DoublyLinkedList {
             }
         } else {
             if (current.getNext() == toInsert) {
-//                println(current,toInsert);
                 this.last = toInsert;
                 return;
             }
@@ -194,7 +202,7 @@ public class DoublyLinkedList {
             toInsert.setPrevious(current);
 
             //remember to update the last element!
-            if(toInsert.getNext()==null) this.last=toInsert;
+            if (toInsert.getNext() == null) this.last = toInsert;
             return;
         }
     }
