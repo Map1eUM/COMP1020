@@ -3,9 +3,6 @@ package Assignment4;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.net.URI;
-import java.nio.charset.Charset;
-import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,6 +12,8 @@ import static processing.core.PApplet.println;
 
 public class DataGeneratorAndTester {
     static String result;
+    static final int MAXLEN = 2000;
+    static final int MAXOPS = 2000;
 
     public static String RandStr() {
 
@@ -54,26 +53,23 @@ public class DataGeneratorAndTester {
 
         out1.write("\n---------MAX:" + String.valueOf(x1.doubleValue()) + "------\n");
         out2.write("\n---------MAX:" + String.valueOf(x2.doubleValue()) + "------\n");
-//
-//        out1.close();
-//        out2.close();
     }
 
     public static void Test() throws IOException {
         FileWriter fw = new FileWriter("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment4\\testData.txt");
         Random rand = new Random();
-        for (int i = 0; i < 3000; ++i) {
-            int type=rand.nextInt(1,3);
+        for (int i = 0; i < MAXLEN / 1; ++i) {
+            int type = rand.nextInt(1, 3);
 //            if(type==1) {
-                int x = rand.nextInt(1000, 2000);
+            int x = rand.nextInt(1000, 2000);
 //            println(x);
-                if (x <= 1200) {
-                    fw.write(RandStr());
-                    fw.write(' ');
-                } else {
-                    fw.write(String.valueOf(x));
-                    fw.write(' ');
-                }
+            if (x <= 1200) {
+                fw.write(RandStr());
+                fw.write(' ');
+            } else {
+                fw.write(String.valueOf(x));
+                fw.write(' ');
+            }
 //            }
             if (i % 100 == 0) fw.write('\n');
         }
@@ -90,17 +86,18 @@ public class DataGeneratorAndTester {
         //test phase 2(actually trivial)-----------------------
         FileWriter out1 = new FileWriter(fn1);
         FileWriter out2 = new FileWriter(fn2);
-        FileWriter resultWriter=new FileWriter("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment4\\testingResult");
+        FileWriter resultWriter = new FileWriter("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment4\\testingResult");
         int len = mylst1.size();
         print(out1, out2, mylst1, myArr);
-        compare(fn1, fn2);
+//        compare(fn1, fn2);
+
 
 //
 //        //--------------------------------------------P1
 //        //About add front and addEnd, size()
 
 
-        for (int i = 1; i < 1500; ++i) {
+        for (int i = 1; i < MAXOPS / 1; ++i) {
             int x = rand.nextInt(1, len);
             Number getVal = myArr.get(x);
             int op = rand.nextInt(1, 2);
@@ -111,7 +108,7 @@ public class DataGeneratorAndTester {
                 myArr.add(0, getVal);
                 mylst1.addFront(getVal);
             }
-            if (i % 1000 == 0)
+            if (i % 100 == 0)
                 print(out1, out2, mylst1, myArr);
         }
 
@@ -124,14 +121,27 @@ public class DataGeneratorAndTester {
             int id = rand.nextInt(0, mylst1.size() - 1);
             mylst1.remove(id);
             myArr.remove(id);
-            if (i % 50 == 0) {
-                //Testing for the maximum number
-                print(out1, out2, mylst1.findMax().getData(), maxArr(myArr));
-                resultWriter.write("MAX TEST:\n");
-                compare(fn1, fn2);
-            }
+            if (i % 100 == 0) print(out1, out2, mylst1, myArr);
+//            int res = compare(fn1
+//            if (i % 50 == 0) {
+//                //Testing for the maximum number
+////                println("COME HERE?");
+//                print(out1, out2, mylst1.findMax().getData(), maxArr(myArr));
+//                println(mylst1.findMax().getData(), maxArr(myArr));
+//                result+="MAX TEST:\n";
+////                compare(fn1, fn2);
+//
+//                myArr=sort(myArr);
+//                mylst1.insertionSort();
+//                result+="SORT TEST:\n";
+//                print(out1,out2,mylst1,myArr);
+////                compare(fn1, fn2);
+//            }
         }
         compare(fn1, fn2);
+        resultWriter.close();
+        out1.close();
+        out2.close();
         //-----------------P4 P5 is bit complicated-----------------------------------
         //it will be inside  above too!
     }
@@ -145,15 +155,6 @@ public class DataGeneratorAndTester {
         fw.write(result);
         fw.close();
 
-//        ArrayList<Number> x = new ArrayList<>();
-//        x.add(1.8);
-//        x.add(1.2);
-//        x.add(123L);
-//        x.add(12);
-//        x = sort(x);
-//        for (Number xx : x) {
-//            println(xx.doubleValue());
-//        }
     }
 
     public static ArrayList<Number> sort(ArrayList<Number> arr) {
@@ -222,7 +223,7 @@ public class DataGeneratorAndTester {
     }
 
 
-    public static void compare(String fn1, String fn2) throws FileNotFoundException, IOException {
+    public static int compare(String fn1, String fn2) throws FileNotFoundException, IOException {
 
         File f1 = new File(fn1);// OUTFILE
         File f2 = new File(fn2);// INPUT
@@ -245,6 +246,7 @@ public class DataGeneratorAndTester {
         reader2.close();
 //        System.out.println("Flag " + flag);
         result += "Flag " + flag + "\n";
+        return flag;
     }
 
 

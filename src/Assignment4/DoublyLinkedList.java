@@ -108,15 +108,6 @@ public class DoublyLinkedList {
             }
             parseScanner(reader, newList);
         }
-
-//        try {
-//            newList.addEnd(NumberFormat.getInstance().parse(reader.next()));
-//            parseScanner(reader, newList);
-//        } catch (ParseException e) {
-//            //This should never happen, unless you pass something is not even a number.
-////            throw new RuntimeException(e);
-//            parseScanner(reader, newList);
-//        }
     }
 
     private void removeNode(Node node) {
@@ -187,7 +178,6 @@ public class DoublyLinkedList {
                 toInsert.setPrevious(null);
                 this.first = toInsert;
                 return;
-
             }
         } else {
             if (current.getNext() == toInsert) {
@@ -200,7 +190,6 @@ public class DoublyLinkedList {
             toInsert.setNext(current.getNext());
             current.setNext(toInsert);
             toInsert.setPrevious(current);
-
             //remember to update the last element!
             if (toInsert.getNext() == null) this.last = toInsert;
             return;
