@@ -1,6 +1,7 @@
 package Assignment4;
 
 import org.jetbrains.annotations.NotNull;
+import processing.core.PApplet;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -58,19 +59,43 @@ public class DataGeneratorAndTester {
     public static void Test() throws IOException {
         FileWriter fw = new FileWriter("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment4\\testData.txt");
         Random rand = new Random();
-        for (int i = 0; i < MAXLEN / 1; ++i) {
-            int type = rand.nextInt(1, 3);
-//            if(type==1) {
-            int x = rand.nextInt(1000, 2000);
-//            println(x);
-            if (x <= 1200) {
-                fw.write(RandStr());
-                fw.write(' ');
-            } else {
-                fw.write(String.valueOf(x));
-                fw.write(' ');
+        for (int i = 0; i < MAXLEN / 200; ++i) {
+            int type = rand.nextInt(1, 4);
+//            println(type);
+            if (type == 1) {
+                Integer x = rand.nextInt(5000, 6000);
+            println(x instanceof Integer);
+                if (x <= 1200) {
+                    fw.write(RandStr());
+                    fw.write(' ');
+                } else {
+                    fw.write(String.valueOf(x));
+                    fw.write(' ');
+                }
             }
-//            }
+            else if(type==2) {
+                Long x = rand.nextLong(3000, 4000);
+
+//            println(x);
+                if (x <= 1200) {
+                    fw.write(RandStr());
+                    fw.write(' ');
+                } else {
+                    fw.write(String.valueOf(x));
+//                    println(String.valueOf(x));
+                    fw.write(' ');
+                }
+            }else {
+                double x = rand.nextDouble(1000, 2000);
+//            println(x);
+                if (x <= 1200) {
+                    fw.write(RandStr());
+                    fw.write(' ');
+                } else {
+                    fw.write(String.valueOf(x));
+                    fw.write(' ');
+                }
+            }
             if (i % 100 == 0) fw.write('\n');
         }
         fw.close();
@@ -88,7 +113,7 @@ public class DataGeneratorAndTester {
         FileWriter out2 = new FileWriter(fn2);
         FileWriter resultWriter = new FileWriter("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\Assignment4\\testingResult");
         int len = mylst1.size();
-        print(out1, out2, mylst1, myArr);
+//        print(out1, out2, mylst1, myArr);
 //        compare(fn1, fn2);
 
 
@@ -97,57 +122,58 @@ public class DataGeneratorAndTester {
 //        //About add front and addEnd, size()
 
 
-        for (int i = 1; i < MAXOPS / 1; ++i) {
-            int x = rand.nextInt(1, len);
-            Number getVal = myArr.get(x);
-            int op = rand.nextInt(1, 2);
-            if (op == 1) {
-                myArr.add(getVal);
-                mylst1.addEnd(getVal);
-            } else if (op == 2) {
-                myArr.add(0, getVal);
-                mylst1.addFront(getVal);
-            }
-            if (i % 100 == 0)
-                print(out1, out2, mylst1, myArr);
-        }
+//        for (int i = 1; i < MAXOPS / 1; ++i) {
+//            int x = rand.nextInt(1, len);
+//            Number getVal = myArr.get(x);
+//            int op = rand.nextInt(1, 2);
+//            if (op == 1) {
+//                myArr.add(getVal);
+//                mylst1.addEnd(getVal);
+//            } else if (op == 2) {
+//                myArr.add(0, getVal);
+//                mylst1.addFront(getVal);
+//            }
+////            if (i % 100 == 0)
+////                print(out1, out2, mylst1, myArr);
+//        }
 
         //??
 //        out2.write("\n");
         //------------------P3 test---------------------------------------
         len = mylst1.size();
         if (len != myArr.size()) println("????????????AWAHAWUHAW");
-        for (int i = 1; i < len; ++i) {
+        for (int i = 1; i < len/10; ++i) {
             int id = rand.nextInt(0, mylst1.size() - 1);
             mylst1.remove(id);
             myArr.remove(id);
-            if (i % 100 == 0) print(out1, out2, mylst1, myArr);
-//            int res = compare(fn1
-//            if (i % 50 == 0) {
-//                //Testing for the maximum number
-////                println("COME HERE?");
-//                print(out1, out2, mylst1.findMax().getData(), maxArr(myArr));
-//                println(mylst1.findMax().getData(), maxArr(myArr));
-//                result+="MAX TEST:\n";
-////                compare(fn1, fn2);
-//
-//                myArr=sort(myArr);
-//                mylst1.insertionSort();
-//                result+="SORT TEST:\n";
-//                print(out1,out2,mylst1,myArr);
-////                compare(fn1, fn2);
-//            }
+//            if (i % 100 == 0) print(out1, out2, mylst1, myArr);
+
         }
+
+        //-----------------P4 P5 is bit complicated-----------------------------------
+        //it will be inside  above too! NO IT WON"T WORK, NOW TEST INDEPENDENTLY
+        println("TEST P4");
+        println(mylst1.findMax().getData());
+        myArr=sortArr(myArr);
+        println(myArr.get(myArr.size()-1));
+        println("ONE TEST P4 IS OVER");
+
+        mylst1.insertionSort();
+
+        out1.write("THIS IS P5 TEST:\n");
+        out2.write("THIS IS P5 TEST:\n");
+        print(out1,out2,mylst1,myArr);
+        println(mylst1.size());
+        println(myArr.size());
+
         compare(fn1, fn2);
         resultWriter.close();
         out1.close();
         out2.close();
-        //-----------------P4 P5 is bit complicated-----------------------------------
-        //it will be inside  above too!
     }
 
     public static void main(String[] ars) throws IOException {
-        for (int i = 1; i <= 2; ++i) {
+        for (int i = 1; i <= 1; ++i) {
             Test();
             result += "One Full Test End\n";
         }
@@ -190,13 +216,17 @@ public class DataGeneratorAndTester {
         ar2 = sort(ar2);
         ar3 = sort(ar3);
 
-        for (Number x : ar1)
+        for (Number x : ar1) {
             ans.add(x);
+        }
+        PApplet.print(ans);
         for (Number x : ar2)
             ans.add(x);
+        PApplet.print(ans);
         for (Number x : ar3)
             ans.add(x);
 
+//        PApplet.print(ans);
         return ans;
     }
 
@@ -239,8 +269,13 @@ public class DataGeneratorAndTester {
         int flag = 1;
         while ((flag == 1) && ((line1 = reader1.readLine()) != null)
                 && ((line2 = reader2.readLine()) != null)) {
-            if (!line1.equalsIgnoreCase(line2))
+            if (!line1.equalsIgnoreCase(line2)) {
                 flag = 0;
+                println("DIFFERENT!");
+//                println(line1);
+//                println(line2);
+            }
+
         }
         reader1.close();
         reader2.close();

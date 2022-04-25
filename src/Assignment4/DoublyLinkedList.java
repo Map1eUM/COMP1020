@@ -37,9 +37,7 @@ public class DoublyLinkedList {
 
     //Add your code below.
 
-    public void clear() {
-        this.first = this.last = null;
-    }
+    //Constant time complexity to add an element to the beginning of the list
     public void addFront(Number data) {
         Node oldFront = this.first;
         this.first = new Node(data, null, this.first);
@@ -48,6 +46,7 @@ public class DoublyLinkedList {
         if (last == null) this.last = this.first;
     }
 
+    //Constant time complexity to add an element to the end of the list
     public void addEnd(Number data) {
         Node oldEnd = this.last;
         this.last = new Node(data, this.last, null);
@@ -57,33 +56,40 @@ public class DoublyLinkedList {
         if (this.first == null) this.first = this.last;
     }
 
+    //public interface to return the size of this linkedlist
     public int size() {
         return sizeRec(this.first);
     }
 
+    //recursively calculate the size of the LinkedList
     private int sizeRec(Node node) {
         if (node == null) return 0;
         return sizeRec(node.getNext()) + 1;
     }
 
+    //use recursive calls to move through the list and build a String representation of itself
     private String toStringRec(Node node) {
         if (node == null) return ">>";
         return String.valueOf(node.getData()) + " " + toStringRec(node.getNext());
     }
 
+    // This method is the public interface to the toStringRec method described above
     public String toString() {
         return "<< " + toStringRec(this.first);
     }
 
+    //use recursive calls to move through the list and build a reversed String representation of itself
     private String toStringReversedRec(Node node) {
         if (node == null) return ">>";
         return node.getData() + " " + toStringReversedRec(node.getPrevious());
     }
 
+    // This method is the public interface to the toStringReversedRec method described above
     public String toStringReversed() {
         return "<< " + toStringReversedRec(this.last);
     }
 
+    //to create and return a new DoublyLinkedList based on the parsing of a file
     public static DoublyLinkedList createList(String filename) {
         try {
             Scanner reader = new Scanner(new FileReader(filename));
@@ -96,12 +102,13 @@ public class DoublyLinkedList {
         //return never reach here!
     }
 
+    // use recursive calls to add elements to the end of given DoublyLinkedList
     private static void parseScanner(Scanner reader, DoublyLinkedList newList) {
         if (!reader.hasNext()) return;
         else {
-            if(reader.hasNextInt()) newList.addEnd(reader.nextInt());
-            else if(reader.hasNextLong()) newList.addEnd(reader.nextLong());
-            else if(reader.hasNextDouble()) newList.addEnd(reader.nextDouble());
+            if (reader.hasNextInt()) newList.addEnd(reader.nextInt());
+            else if (reader.hasNextLong()) newList.addEnd(reader.nextLong());
+            else if (reader.hasNextDouble()) newList.addEnd(reader.nextDouble());
             else {
                 //simply filtered the non-number data
                 if (reader.hasNext()) reader.next();
@@ -110,6 +117,7 @@ public class DoublyLinkedList {
         }
     }
 
+    //remove the given node
     private void removeNode(Node node) {
         Node pre = node.getPrevious();
         Node nxt = node.getNext();
@@ -132,6 +140,7 @@ public class DoublyLinkedList {
         }
     }
 
+    //recursively find the removing node
     private Node removeRec(int index, Node node) {
         if (index == 0) {
             //save the reference to the deleted node in the heap!
@@ -142,6 +151,7 @@ public class DoublyLinkedList {
         return removeRec(index - 1, node.getNext());
     }
 
+    //This method is the public interface to the removeRec method
     public Node remove(int index) {
         if (index >= this.size()) {
             throw new IndexOutOfBoundsException("Seems like we have an invalid index!\n");
@@ -159,6 +169,7 @@ public class DoublyLinkedList {
         return findMaxRec(this.first, this.first);
     }
 
+    //make an ordered insertion of the toInsert Node recursively
     public void orderedInsertRec(Node toInsert, Node current) {
         if (current == null) {
             //Assume this list is empty. special case
@@ -184,6 +195,7 @@ public class DoublyLinkedList {
                 this.last = toInsert;
                 return;
             }
+            //Six possible links to update!
             if (toInsert.getNext() != null) toInsert.getNext().setPrevious(toInsert.getPrevious());
             if (toInsert.getPrevious() != null) toInsert.getPrevious().setNext(toInsert.getNext());
             if (current.getNext() != null) current.getNext().setPrevious(toInsert);
@@ -195,7 +207,9 @@ public class DoublyLinkedList {
             return;
         }
     }
-
+    //use recursive calls to move through the list, take the current Node and
+    //insert it in the right spot inside the sorted part
+    //of the list
     private void insertionSortRec(Node curNode) {
         //start from the second one! if only one or no element this method shouldn't be called!
         if (curNode == null) return;
@@ -206,7 +220,7 @@ public class DoublyLinkedList {
         orderedInsertRec(curNode, curNode.getPrevious());
         insertionSortRec(nxtCurNode);
     }
-
+    // This method is the public interface to the insertionSortRec method
     public void insertionSort() {
         //already sorted.
         if (this.size() == 1 || this.size() == 0) return;
