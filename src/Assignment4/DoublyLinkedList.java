@@ -2,8 +2,6 @@ package Assignment4;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class DoublyLinkedList {
@@ -158,12 +156,14 @@ public class DoublyLinkedList {
         } else return removeRec(index, this.first);
     }
 
+    //use recursive calls to move through the list and return the largest Node in the list (by using the compareTo method of the
+    //Node class)
     private Node findMaxRec(Node node, Node maxNode) {
         if (node.compareTo(maxNode) > 0) maxNode = node;
         if (node.getNext() == null) return maxNode;
         else return findMaxRec(node.getNext(), maxNode);
     }
-
+    //This method is the public interface to the findMaxRec method
     public Node findMax() {
         if (this.size() == 0) return null;
         return findMaxRec(this.first, this.first);
@@ -226,6 +226,4 @@ public class DoublyLinkedList {
         if (this.size() == 1 || this.size() == 0) return;
         else insertionSortRec(this.first.getNext());
     }
-
-
 }
