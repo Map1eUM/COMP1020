@@ -13,7 +13,7 @@ public class MergeSort {
     int[] data = new int[size]; // this is not a good practice. better in constructor.
 
     public int[] MergeSort() {
-        return this.data = MergeSortRec(1, length);
+        return this.data = MergeSortRec(0, length-1);
     }
 
     public MergeSort(String path) throws FileNotFoundException {
@@ -21,16 +21,14 @@ public class MergeSort {
         Scanner r = new Scanner(new FileReader(path));
         length = 0;
         while (r.hasNext()) {
-            print("IS OK");
             if (r.hasNextInt()) {
                 this.data[length++] = r.nextInt();
-                println("THIS READING!");
             }
             else {
-                println(r.next());
+                //here! why you didn't find it?
+                r.next();
             }
         }
-        println(length);
     }
     public String toString() {
         String S = "";
@@ -41,7 +39,6 @@ public class MergeSort {
     }
 
     public int[] MergeSortRec(int l, int r) {
-        print(l,r);
         if (l == r) {
             int[] x = new int[1];
             x[0] = data[l];
@@ -62,8 +59,8 @@ public class MergeSort {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        MergeSort dt = new MergeSort("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\FINAL\\practice\\data");
-        System.out.println(dt);
-        println(dt.MergeSort());
+//        MergeSort dt = new MergeSort("C:\\Users\\chenr5-INS\\IdeaProjects\\COMP1020\\src\\FINAL\\practice\\data");
+//        System.out.println(dt);
+//        println(dt.MergeSort());
     }
 }
